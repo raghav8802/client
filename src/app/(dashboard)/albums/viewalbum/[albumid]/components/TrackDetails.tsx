@@ -147,7 +147,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
               }
             ></i>
           )}
-
+            
           <Link href={`/albums/edittrack/${btoa(trackId)}`}>
             <i className="bi bi-pencil-square" title="Edit track"></i>
           </Link>
@@ -256,12 +256,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
                     </span>{" "}
                     {trackDetails && trackDetails.version}
                   </li>
-                  <li className={`mb-2 ${Style.albumInfoItem}`}>
-                    <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Duration:
-                    </span>{" "}
-                    {trackDetails && trackDetails.duration}
-                  </li>
+                  
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
                       Crbt:

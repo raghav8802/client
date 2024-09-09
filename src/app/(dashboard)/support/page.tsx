@@ -150,18 +150,11 @@ export default function Component() {
             <CardTitle>Contact Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <h3 className="font-semibold">Address</h3>
-              <p>
-                TC HO, C-4, 4/19, Sector-2
-                <br />
-                Rajender Nagar, Sahibabad, Ghazibabad, UP-201005
-              </p>
-            </div>
+            
             <div>
               <h3 className="font-semibold">Phone</h3>
               <p>
-                <a>011 69268163 / +91 7303630201</a>
+                <a>011 69268163 </a>
               </p>
             </div>
             <div>
@@ -173,7 +166,7 @@ export default function Component() {
             <div>
               <h3 className="font-semibold">WhatsApp</h3>
               <p>
-                <a href="#">+91 7303630201</a>
+                <a href="#">011 69268163 </a>
               </p>
             </div>
           </CardContent>
