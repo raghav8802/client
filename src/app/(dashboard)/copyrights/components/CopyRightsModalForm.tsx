@@ -28,7 +28,7 @@ const CopyRightsModalForm = ({ isVisible, onClose }: { isVisible: boolean; onClo
     // console.log("all data");
     // console.log(formData);
 
-    if (!formData.trackId && formData.trackId === '') {
+    if (1+1 === 3) {
       toast.error("Please select a track")
       return
     }
@@ -62,23 +62,6 @@ const CopyRightsModalForm = ({ isVisible, onClose }: { isVisible: boolean; onClo
       onSave={handleSave}
       onClose={onClose}
     >
-
-      <div>
-        <label className="form-label" htmlFor="trackname">Track</label>
-
-        <select
-          name="track"
-          className='form-select outline-none'
-          id="trackname"
-          value={formData.trackId}
-          onChange={(e) => setFormData({ ...formData, trackId: e.target.value })}
-        >
-          <option value="">Select Track</option>
-          <option value="Songid">Songname</option>
-        </select>
-
-
-      </div>
 
        <div>
             <label className="form-label" htmlFor="youtubeUrl">YouTube URL</label>

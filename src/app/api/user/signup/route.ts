@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from 'bcryptjs';
-import { sendEmail } from "@/helpers/mailer";
+// import { sendEmail } from "@/helpers/mailer";
 import { connect } from "@/dbConfig/dbConfig";
 import Label from "@/models/Label";
 import fetch from 'node-fetch';
@@ -77,11 +77,10 @@ export async function POST(request: NextRequest) {
             razor_contact: razorpayContactId, // Ensure this matches the schema
             password: hashedPassword
         });
-           console.log(contact);
-           console.log(razorpayContactId)
+           
         const savedUser = await newUser.save();
 
-        await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
+        // await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
 
         return NextResponse.json({
             message: "Razorpay contact created and user registered successfully",

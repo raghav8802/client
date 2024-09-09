@@ -210,7 +210,7 @@ const albums = ({ params }: { params: { albumid: string } }) => {
           <div className="flex">
             {albumId &&
               albumDetails &&
-              albumDetails.status !== AlbumProcessingStatus.Processing && (
+              albumDetails.status == AlbumProcessingStatus.Draft && (
                 <Link
                   href={`/albums/edit/${btoa(albumId as string)}`}
                   className={`mt-4 mb-2 ${Style.albumEditBtn} p-3`}
@@ -220,6 +220,10 @@ const albums = ({ params }: { params: { albumid: string } }) => {
                 </Link>
               )}
 
+              {albumId &&
+              albumDetails &&
+              albumDetails.status == AlbumProcessingStatus.Draft && (
+
             <Link
               href={`/albums/addtrack/${btoa(albumId as string)}`}
               className={`mt-4 ms-5 mb-2 btn ${Style.albumAddTrack} p-3`}
@@ -227,6 +231,8 @@ const albums = ({ params }: { params: { albumid: string } }) => {
               <i className="me-2 bi bi-plus-circle"></i>
               Add track
             </Link>
+
+          )}
 
             {albumDetails &&
               (albumDetails.status === AlbumProcessingStatus.Draft ||
@@ -243,7 +249,7 @@ const albums = ({ params }: { params: { albumid: string } }) => {
 
             {albumId &&
               albumDetails &&
-              albumDetails.status !== AlbumProcessingStatus.Processing && (
+              albumDetails.status == AlbumProcessingStatus.Draft && (
                 <DeleteButton albumId={albumId} />
               )}
               
