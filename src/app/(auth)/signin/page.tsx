@@ -109,9 +109,9 @@ const SignIn = () => {
                   </p>
               </div>
 
-              <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  >
+              {/* <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  > */}
               
-                Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p>
+                {/* Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p> */}
             </div>
             
 

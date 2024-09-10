@@ -43,12 +43,12 @@ const TrackSection: React.FC<TrackSectionProps> = ({ albumId }) => {
           {/* <h5 className={Style.subheading}><i className="bi bi-music-note"></i> Tracks</h5> */}
           <div className={`mt-3 ${Style.trackDetailsTop}`}>
             <h5 className={Style.subheading}>Tracks</h5>
-            <Link
+            {/* <Link
               href={`/albums/addtrack/${btoa(albumId as string)}`}
               className={buttonVariants({ variant: "default" })}
             >
               <i className="bi bi-plus-circle mr-2"></i> Add Track
-            </Link>
+            </Link> */}
           </div>
 
           {albumId && (

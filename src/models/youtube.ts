@@ -3,7 +3,7 @@ import mongoose, { Document, Schema } from "mongoose";
 interface IYoutube extends Document {
   labelId: mongoose.Schema.Types.ObjectId;
   albumId: mongoose.Schema.Types.ObjectId;
-  trackId: mongoose.Schema.Types.ObjectId;
+  
   link: string | null;
   title: string | null;
   status: boolean;
@@ -16,17 +16,14 @@ const youtubeSchema: Schema<IYoutube> = new Schema({
     ref: 'Labels',
     required: true,
   },
-  trackId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
+ 
   link: {
     type: String,
     required: true,
   },
   status: {
     type: Boolean,
-    default: null
+    default: false
   },
   comment: {
     type: String,
