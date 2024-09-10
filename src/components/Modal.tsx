@@ -35,7 +35,7 @@ export function Modal({
                         </DialogDescription>
                     }
                 </DialogHeader>
-                <div className="grid gap-4 pt-1 overflow-y-auto" style={{height: "420px"}}>
+                <div className="grid gap-4 pt-1 overflow-y-auto" >
                     {children}
                 </div>
                 <DialogFooter>

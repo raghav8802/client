@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     await connect();
 
     const body = await request.json();
-    const { labelId, trackId, link } = body;
+    const { labelId,  link } = body;
 
     // Extract the video ID from the YouTube URL
     const videoId = extractVideoId(link);
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     console.log('SourceAudio API Response:', apiResponse.data);
 
     // Save the full YouTube URL and other details to the database
-    const newYoutube = new Youtube({ labelId, trackId, link });
+    const newYoutube = new Youtube({ labelId,  link });
     const result = await newYoutube.save();
 
     // Return a response indicating success

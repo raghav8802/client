@@ -18,15 +18,14 @@ const CopyRightsModalForm = ({ isVisible, onClose }: { isVisible: boolean; onClo
 
 
   const [formData, setFormData] = useState({
-    trackId: '',
+    
     youtubeUrl: ''
   });
 
 
   const handleSave = async () => {
 
-    // console.log("all data");
-    // console.log(formData);
+    
 
     if (1+1 === 3) {
       toast.error("Please select a track")
@@ -39,13 +38,14 @@ const CopyRightsModalForm = ({ isVisible, onClose }: { isVisible: boolean; onClo
 
     const response = await apiPost('/api/copyright/addCopyright',
       {
-        labelId, trackId: '668973a1256cc9a680905130', link: formData.youtubeUrl
+        labelId,  link: formData.youtubeUrl
       })
-
+       console.log(response);
     if (response.success) {
       onClose();
       toast.success("New Copyright added")
-      setFormData({ trackId: "", youtubeUrl: "" })
+      setFormData({   youtubeUrl: "" })
+      window.location.reload();
     }else{
       onClose();
       toast.success("Internal server error")
@@ -77,7 +77,7 @@ const CopyRightsModalForm = ({ isVisible, onClose }: { isVisible: boolean; onClo
                 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
                 
                 if (!youtubeRegex.test(value) && value !== "") {
-                  alert("Please enter a valid YouTube URL");
+                  toast.error("Please enter a valid YouTube URL");
                   // Optionally reset the input if invalid
                   setFormData({ ...formData, youtubeUrl: "" });
                 }
