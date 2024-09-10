@@ -28,20 +28,22 @@ const SignIn = () => {
   };
 
   const onSignIn = async () => {
-  
+    console.log("on signin");
+    console.log(user);
     if (!validateEmail(user.email)) {
-
+      console.log("Invalid email format");
       toast.error("Enter a valid email");
       return;
     }
 
     if (!validatePassword(user.password)) {
-    
+      console.log("Password must be at least 8 characters long");
       toast.error("Enter a valid Password");
       return;
     }
 
     try {
+      console.log("in try");
       
       const response = await apiPost('/api/user/signin', user);
       

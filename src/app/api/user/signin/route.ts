@@ -7,7 +7,7 @@ import { EmailTemplate } from "@/components/Email/Welcome";
 import { Resend } from 'resend';
 
 //Resend
-// const resend = new Resend(process.env.RESEND_API_KEY!);
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(request: NextRequest) {
     console.log("herer");
@@ -58,21 +58,22 @@ export async function POST(request: NextRequest) {
 
         // Send the welcome email to your own address for testing
         // eslint-disable-next-line no-unused-vars
-        // const { data, error } = await resend.emails.send({
-        //     from: 'Acme <onboarding@resend.dev>', //testing default email id
-        //     to: 'itadmin@talantoncore.in', // Use your own email address for testing
-        //     subject: 'Welcome to SwaLay!',
-        //     react: EmailTemplate({ firstName: user.username }), // Assuming `username` as the first name
-        // });
+        const { data, error } = await resend.emails.send({
+            from: 'SwaLay <onboarding@swalay.in>', // Correct format with a valid email address
+            to: email, // Use the user's email address
+            subject: 'Welcome to SwaLay!',
+            react: EmailTemplate({ firstName: user.username }), // Assuming `username` as the first name
+        });
+        
 
-        // if (error) {
-        //     console.error("Email sending error:", error);
-        //     return NextResponse.json({
-        //         status: 500,
-        //         success: false,
-        //         error: "Failed to send welcome email"
-        //     });
-        // }
+        if (error) {
+            console.error("Email sending error:", error);
+            return NextResponse.json({
+                status: 500,
+                success: false,
+                error: "Failed to send welcome email"
+            });
+        }
 
         const response = NextResponse.json({
             message: "Logged In Success",
