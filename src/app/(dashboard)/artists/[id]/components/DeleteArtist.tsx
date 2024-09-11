@@ -41,7 +41,7 @@ const DeleteArtist: React.FC<AlbumDeleteProps> = ({ artistId }) => {
     <div>
       <button className={"bg-red-500 text-white px-4 py-3 rounded me-5"} onClick={onDelete}>
         <i className="me-2 bi bi-trash"></i>
-        Delete album
+        Delete Artist
       </button>
 
       <ConfirmationDialog

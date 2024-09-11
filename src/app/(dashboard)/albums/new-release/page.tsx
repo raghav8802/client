@@ -37,6 +37,9 @@ type TagOption = {
 };
 
 const AlbumForm: React.FC = () => {
+  
+
+
   const context = useContext(UserContext);
   const labelId = context?.user?._id ?? "";
   const username = context?.user?.username || '';
@@ -59,12 +62,12 @@ const AlbumForm: React.FC = () => {
   });
 
   const albumTags = [
-    { label: "Romantic", value: "romamntic" },
-    { label: "Happy", value: "happy" },
-    { label: "Sad", value: "sad" },
-    { label: "Energetic", value: "energetic" },
-    { label: "Devotional", value: "devotional" },
-    { label: "Old Melodies", value: "old melodies" },
+    { label: "Romantic", value: "Romamntic" },
+    { label: "Happy", value: "Happy" },
+    { label: "Sad", value: "Sad" },
+    { label: "Energetic", value: "Energetic" },
+    { label: "Devotional", value: "Devotional" },
+    { label: "Old Melodies", value: "Old Melodies" },
   ];
   const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -100,6 +103,18 @@ const AlbumForm: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
+     // Check if the selected date is within the next 5 days
+  if (name === "releaseDate") {
+    const selectedDate = new Date(value);
+    const today = new Date();
+    const fiveDaysFromNow = new Date();
+    fiveDaysFromNow.setDate(today.getDate() + 5);
+    
+    if (selectedDate >= today && selectedDate <= fiveDaysFromNow) {
+      toast.error("Release date must be at least 5 days from today To ensure smooth content delivery and an on-time album release");
+    }
+  }
   };
 
   // Handling form submission
@@ -185,7 +200,7 @@ const AlbumForm: React.FC = () => {
         setSelectedTags([]);
       } else {
         console.log("Invalid token");
-        toast.error("🤔 Invalid Token", {
+        toast.error("Invalid Token", {
           id: loadingToastId,
         });
       }
@@ -324,7 +339,7 @@ const AlbumForm: React.FC = () => {
                   onChange={handleChange}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
-                {errors.releaseDate && (
+                {errors.releaseDate&& (
                   <p className="text-red-500 text-sm mt-1">
                     {errors.releaseDate[0]}
                   </p>

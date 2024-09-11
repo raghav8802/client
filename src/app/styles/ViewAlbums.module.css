@@ -16,7 +16,7 @@
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #b0afafc4;
-    height: 380px;
+    height: 500px;
     overflow: hidden; /* Ensure the image does not overflow */
     padding: 3px;
 }
@@ -33,7 +33,7 @@
 .albumDetails{
     /* border: 2px solid rgb(34, 226, 111); */
     width: 64%;
-    height: 380px;
+    height: 500px;
     margin: auto;
     display: flex;
     flex-direction: column;

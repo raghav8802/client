@@ -140,10 +140,10 @@ const albums = ({ params }: { params: { albumid: string } }) => {
             <Image
               src={`${process.env.NEXT_PUBLIC_AWS_S3_FOLDER_PATH}albums/07c1a${albumId}ba3/cover/${albumDetails.thumbnail}`}
               alt="album thumbnail"
-              width={3000}
-              height={3000}
+              width={480}
+              height={480}
               className={Style.albumThumbnail}
-              unoptimized
+              
             />
           )}
         </div>

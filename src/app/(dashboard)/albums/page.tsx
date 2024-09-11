@@ -67,8 +67,8 @@ const albums = () => {
         <div className=' w-100'>
             <div className={Style.topbar}>
                 <div className={Style.tagLineBox}>
-                    <p className={Style.titleLabel}>Swalay Talent on core</p>
-                    <p className={Style.taglineLabel}>Swalay Talent on core Tag line for music for indepent artist</p>
+                    <p className={Style.titleLabel}>My Workspace.</p>
+                    <p className={Style.taglineLabel}> Let the music be the heartbeat of your journey</p>
                 </div>
                 <div className={Style.exportBtnGroup}>
                     <Link href={'./albums/new-release'} className={Style.importButton}>+ New Release</Link>

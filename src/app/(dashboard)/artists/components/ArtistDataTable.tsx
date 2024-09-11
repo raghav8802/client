@@ -90,7 +90,7 @@ export const artistColumns: ColumnDef<Artist>[] = [
     },
     {
         accessorKey: "iprs",
-        header: "IPRS",
+        header: "IPI No. ",
         cell: ({ row }) => (
             <div>
                 {row.getValue("iprs") ? (

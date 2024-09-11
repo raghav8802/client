@@ -29,6 +29,7 @@
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.428.0",
+    "module": "^1.2.5",
     "mongoose": "^8.4.5",
     "next": "14.2.3",
     "nodemailer": "^6.9.14",

@@ -20,12 +20,20 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Check for existing support requests with the same labelId
-    const existingSupportRequests = await Support.find({ labelId });
+    // Get today's date range
+    const today = new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+
+    // Check for existing support requests with the same labelId for today
+    const existingSupportRequests = await Support.find({
+      labelId,
+      createdAt: { $gte: startOfDay, $lte: endOfDay }
+    });
 
     if (existingSupportRequests.length >= 2) {
       return NextResponse.json({
-        message: "A maximum of two requests per label is allowed.",
+        message: "A maximum of two requests per day is allowed.",
         success: false,
         status: 400
       });
