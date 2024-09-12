@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import UserProvider from "@/context/UserProvider";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
+import React from "react";
 // import Head from "next/head";
 
 
