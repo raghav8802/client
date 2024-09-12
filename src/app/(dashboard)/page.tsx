@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import Style from "../styles/Home.module.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import HomeStatsCard from "@/components/HomeStatsCard";
