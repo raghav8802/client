@@ -1,4 +1,5 @@
 "use client";
+import DeleteArtist from "../[id]/components/DeleteArtist";
 
 import * as React from "react";
 import {
@@ -107,40 +108,36 @@ export const artistColumns: ColumnDef<Artist>[] = [
     },
     {
         accessorKey: "iprsNumber",
-        header: "IPRS Number",
+        header: "IPI Number",
         cell: ({ row }) => <div>{row.getValue("iprsNumber")}</div>,
     },
-    {
-        accessorKey: "actionColumn",
-        header: "Action",
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const artist = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <DotsHorizontalIcon className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(artist._id)}
-                        >
-                            Copy artist ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Link href={`/artists/${btoa(artist._id)}`} >View artist details</Link>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
+    // {
+    //     accessorKey: "actionColumn",
+    //     header: "Action",
+    //     id: "actions",
+    //     enableHiding: false,
+    //     cell: ({ row }) => {
+    //         const artist = row.original;
+    //         return (
+    //             <DropdownMenu>
+    //                 <DropdownMenuTrigger asChild>
+    //                     <Button variant="ghost" className="h-8 w-8 p-0">
+    //                         <span className="sr-only">Open menu</span>
+    //                         <DotsHorizontalIcon className="h-4 w-4" />
+    //                     </Button>
+    //                 </DropdownMenuTrigger>
+    //                 <DropdownMenuContent align="end">
+    //                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        
+    //                     <DropdownMenuSeparator />
+    //                     <DropdownMenuItem>
+    //                         <Link href={`/artists/${btoa(artist._id)}`} >View artist details</Link>
+    //                     </DropdownMenuItem>
+    //                 </DropdownMenuContent>
+    //             </DropdownMenu>
+    //         );
+    //     },
+    // },
 ];
 
 export function ArtistDataTable({ data }: { data: Artist[] }) {
