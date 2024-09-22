@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { apiPost } from '@/helpers/axiosRequest'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import Image from "next/image";
 
 
 const SignIn = () => {
@@ -123,10 +124,13 @@ const SignIn = () => {
 
       </div>
       <div className={`flex h-screen ${Styles.containerRight}`}>
-        <h1 className={Styles.superHeading}>SwaLay</h1>
+      <Image src = "/images/logo.png" alt="logo" width={120} height={100} />
+        
         <p className={Styles.subHeading}>Get Your Music on Global Platforms</p>
 
       </div>
+
+      
 
 
     </div>
