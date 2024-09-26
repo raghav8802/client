@@ -5,6 +5,8 @@ import Style from "../app/styles/HomeStatsCard.module.css";
 
 import UserContext from "@/context/userContext";
 import { apiGet } from "@/helpers/axiosRequest";
+import Link from "next/link";
+
 
 const HomeStatsCard = () => {
   const context = useContext(UserContext);
@@ -44,7 +46,9 @@ const HomeStatsCard = () => {
     <div className={Style.statsContainer}>
       <div className={Style.greetContainer}>
         <h1 className={Style.heading}>Welcome, {userName}</h1>
-        <p className={Style.para}></p>
+        <p className={Style.para}>
+          <Link href={`/agreement/${btoa(labelId as string)}`} >agreement</Link>
+        </p>
       </div>
 
       {/* <div className={Style.statusCardContainer}>

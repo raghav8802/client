@@ -90,7 +90,7 @@ export const copyrightsColumns: ColumnDef<Copyright>[] = [
             return <div className="ms-2 ">
                 {copyrightsData.status && <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Success</span>}
 
-                {!copyrightsData.status && <span className="me-2 inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">Processing</span>}
+                {!copyrightsData.status && <span className="me-2 inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">Success</span>}
             </div>;
         },
 

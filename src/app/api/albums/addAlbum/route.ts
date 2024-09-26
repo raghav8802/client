@@ -71,6 +71,16 @@ export async function POST(req: NextRequest) {
     savedAlbum.thumbnail = uploadResult.fileName; // Set the thumbnail field to the S3 file name
     await savedAlbum.save(); // Save the updated album
 
+   const resUpm =  await Album.updateMany(
+      { updatedAt: { $exists: false } },  // Find documents without 'updatedAt'
+      { $set: { updatedAt: new Date() } } // Set 'updatedAt' to current time
+    );
+
+    console.log("resUpm  :");
+    console.log(resUpm);
+    
+    
+
     return NextResponse.json({
       message: "Suceess album saved",
       data: savedAlbum,

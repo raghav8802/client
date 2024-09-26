@@ -17,7 +17,8 @@ const register = () => {
     password: "",
     contact: "",
     confirmPassword: "",
-    username: ""
+    username: "",
+    type: "normal"
 }
 
   const [user, setUser] = useState(initialState)

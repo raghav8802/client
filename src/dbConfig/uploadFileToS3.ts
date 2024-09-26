@@ -223,4 +223,48 @@ export async function uploadArtistProfileToS3({
   }
 }
 
+//! Upolad signature to s3
+
+type UploadLabelSignatureS3Params = {
+  file: Buffer;
+  fileName: string;
+};
+export async function UploadLabelSignatureAgrrementS3Params({
+  file,
+  fileName,
+}: UploadLabelSignatureS3Params): Promise<{ status: boolean; fileName: string }> {
+  try {
+    const fileBuffer = file;
+    const uploadFilePath = `labels/signature/${fileName}`;
+
+    // Determine the content type based on the file extension
+    const fileExtension = fileName.split(".").pop();
+    let contentType = ""; // Default content type
+
+    switch (fileExtension) {
+      case "png":
+        contentType = "image/png";
+        break;
+      case "jpeg":
+      case "jpg":
+        contentType = "image/jpeg";
+        break;
+    }
+
+    const params = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: uploadFilePath,
+      Body: fileBuffer,
+      ContentType: contentType,
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+    return { status: true, fileName };
+  } catch (error: any) {
+    console.error("Error uploading file to S3:", error);
+    return { status: false, fileName };
+  }
+}
+
 

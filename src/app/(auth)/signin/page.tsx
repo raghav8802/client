@@ -1,23 +1,21 @@
-"use client"
-import Link from 'next/link'
-import Styles from '../Styles/Signin.module.css'
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { apiPost } from '@/helpers/axiosRequest'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+"use client";
+import Link from "next/link";
+import Styles from "../Styles/Signin.module.css";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { apiPost } from "@/helpers/axiosRequest";
+import { useRouter } from "next/navigation";
+import React from "react";
 import Image from "next/image";
 
-
 const SignIn = () => {
-
-  const router = useRouter()
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,30 +43,32 @@ const SignIn = () => {
 
     try {
       console.log("in try");
-      
-      const response = await apiPost('/api/user/signin', user);
-      
+
+      const response = await apiPost("/api/user/signin", user);
+
+      console.log("response");
+      console.log(response.data.signature);
 
       if (response.success) {
-        toast.success("Success")
-        setUser({ email: "", password: "" })
-        setTimeout(() => {
-          router.push('/')
-        }, 1200);
+        toast.success("Success");
+        setUser({ email: "", password: "" });
+        if (response.data.signature) {
+          router.push("/");
+        } else {
+          router.push(`agreement/${btoa(response.data._id)}`);
+        }
       } else {
-        toast.error("Invalid Credentials")
+        toast.error("Invalid Credentials");
       }
     } catch (error) {
-      
       console.log(error);
-
     }
-
-  }
+  };
 
   return (
-  
-    <div className={`flex items-center justify-center w-full h-screen ${Styles.mainContainer}`}>
+    <div
+      className={`flex items-center justify-center w-full h-screen ${Styles.mainContainer}`}
+    >
       <div className={` ${Styles.containerLeft}`}>
         <div className={Styles.containerLeftInner}>
           {/* <h2 className={Styles.heading}>Login <Image src='/images/wink.png' className='ms-2' width={25} height={25} alt='wink' /> </h2> */}
@@ -76,12 +76,17 @@ const SignIn = () => {
           {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> */}
 
           <div>
-            <div className={`mt-3 ${Styles.registerform}`} >
-
+            <div className={`mt-3 ${Styles.registerform}`}>
               <div className={Styles.formGroup}>
-                <label className={Styles.inputLable} htmlFor="email"><i className="bi bi-envelope-fill"></i></label>
-                <input className={Styles.inputField} type="email" required={true}
-                  name="email" id="email"
+                <label className={Styles.inputLable} htmlFor="email">
+                  <i className="bi bi-envelope-fill"></i>
+                </label>
+                <input
+                  className={Styles.inputField}
+                  type="email"
+                  required={true}
+                  name="email"
+                  id="email"
                   placeholder="Your Email"
                   value={user.email}
                   onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -89,54 +94,53 @@ const SignIn = () => {
               </div>
               <div className={Styles.formGroup}>
                 <label className={Styles.inputLable} htmlFor="pass">
-                  <i className={`bi ${isPasswordVisible ? "bi-eye-fill" : "bi-eye-slash-fill"} `}
+                  <i
+                    className={`bi ${
+                      isPasswordVisible ? "bi-eye-fill" : "bi-eye-slash-fill"
+                    } `}
                     onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                   ></i>
                 </label>
-                <input className={Styles.inputField}
+                <input
+                  className={Styles.inputField}
                   type={isPasswordVisible ? "text" : "password"}
-                  name="pass" id="pass" required={true} placeholder="Password"
+                  name="pass"
+                  id="pass"
+                  required={true}
+                  placeholder="Password"
                   value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                 />
               </div>
 
-             
               <div className={`${Styles.formGroup} ${Styles.formbutton} `}>
-                <button className={Styles.submitButton} onClick={onSignIn} >Sign In</button>
+                <button className={Styles.submitButton} onClick={onSignIn}>
+                  Sign In
+                </button>
               </div>
 
               <div>
                 <p className={Styles.forgotPassword}>
-                  <Link href= "/forgotpassword">Forgot Password?</Link>
-                  </p>
+                  <Link href="/forgotpassword">Forgot Password?</Link>
+                </p>
               </div>
 
               {/* <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  > */}
-              
-                {/* Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p> */}
+
+              {/* Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p> */}
             </div>
-            
-
           </div>
-
         </div>
-
       </div>
       <div className={`flex h-screen ${Styles.containerRight}`}>
-      <Image src = "/images/logo.png" alt="logo" width={120} height={100} />
-        
+        <Image src="/images/logo.png" alt="logo" width={120} height={100} />
+
         <p className={Styles.subHeading}>Get Your Music on Global Platforms</p>
-
       </div>
-
-      
-
-
     </div>
+  );
+};
 
-  )
-
-}
-
-export default SignIn
+export default SignIn;

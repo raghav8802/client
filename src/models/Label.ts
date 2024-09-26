@@ -14,6 +14,7 @@ export interface iLabel extends Document {
   lable: string | null; // Specify this can also be null
   joinedAt: Date;
   subscriptionEndDate: Date;
+  signature: string;
 }
 
 const LabelSchema: Schema<iLabel> = new Schema({
@@ -80,6 +81,10 @@ const LabelSchema: Schema<iLabel> = new Schema({
   subscriptionEndDate: {
     type: Date,
     default: Date.now,
+  },
+  signature: {
+    type: String,
+    default: null,
   },
 });
 

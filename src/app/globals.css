@@ -595,6 +595,10 @@ footer {
   height: 270px;
 }
 
+/* for content delivery report in view album  */
+#contentDeliveryReportSheet {
+  z-index: 999;
+}
 
 
 

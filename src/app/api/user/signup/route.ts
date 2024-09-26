@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from 'bcryptjs';
-// import { sendEmail } from "@/helpers/mailer";
 import { connect } from "@/dbConfig/dbConfig";
+
 import Label from "@/models/Label";
+import bcryptjs from 'bcryptjs';
 import fetch from 'node-fetch';
 
 interface RazorpayResponse {

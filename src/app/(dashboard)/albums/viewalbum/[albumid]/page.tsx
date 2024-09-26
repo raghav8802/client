@@ -11,6 +11,7 @@ import AlbumStatus from "../components/AlbumStatus";
 import TrackSection from "./components/TrackSection";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import DeleteButton from "./components/DeleteButton";
+import ContentDeliverySheet from "./components/ContentDeliveryReport";
 
 // import MusicPlayer from '../components/MusicPlayer'
 
@@ -19,6 +20,7 @@ interface AlbumDetails {
   cline: string;
   comment: string | null;
   date: string;
+  updatedAt: string;
   genre: string;
   labelId: string;
   language: string;
@@ -67,9 +69,7 @@ const albums = ({ params }: { params: { albumid: string } }) => {
       const response = await apiGet(
         `/api/albums/getAlbumsDetails?albumId=${albumId}`
       );
-      console.log(
-        `${process.env.NEXT_PUBLIC_AWS_S3_FOLDER_PATH}albums/07c1a${albumId}ba3/cover/${response.data.thumbnail}`
-      );
+      console.log(response.data);
 
       if (response.data) {
         setAlbumDetails(response.data);
@@ -143,7 +143,6 @@ const albums = ({ params }: { params: { albumid: string } }) => {
               width={480}
               height={480}
               className={Style.albumThumbnail}
-              
             />
           )}
         </div>
@@ -155,8 +154,7 @@ const albums = ({ params }: { params: { albumid: string } }) => {
             </div>
           )}
           <h2 className={Style.albumTitle}>
-            {albumDetails && albumDetails.title} {albumDetails && albumDetails.status}
-            {albumDetails && typeof(albumDetails.status)}
+            {albumDetails && albumDetails.title}
           </h2>
           <p className={`${Style.albumArtist} mb-2`}>
             {albumDetails && albumDetails.artist}
@@ -192,22 +190,44 @@ const albums = ({ params }: { params: { albumid: string } }) => {
               </span>
               {albumDetails?.upc}
             </li>
-
+            <li className={`mb-2 ${Style.albumInfoItem}`}>
+              <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                Release Date:{" "}
+              </span>
+              {albumDetails?.releasedate
+                ? new Date(albumDetails.releasedate).toLocaleDateString(
+                    "en-US",
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )
+                : ""}
+            </li>
             <li className={`mb-2 ${Style.albumInfoItem}`}>
               <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
                 C Line:{" "}
-              </span>{" "}
+              </span>
               {albumDetails ? `© ${albumDetails.cline}` : ""}
             </li>
             <li className={`mb-2 ${Style.albumInfoItem}`}>
               <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                P Line:{" "}
+                Submission Date:
+              </span>
+              {albumDetails?.date
+                ? new Date(albumDetails.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : ""}
+            </li>
+            <li className={`mb-2 ${Style.albumInfoItem}`}>
+              <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                P Line:
               </span>
               {albumDetails ? `℗ ${albumDetails.pline}` : ""}
             </li>
           </ul>
 
-          <div className="flex">
+          <div className="flex items-center">
             {albumId &&
               albumDetails &&
               albumDetails.status == AlbumProcessingStatus.Draft && (
@@ -220,19 +240,17 @@ const albums = ({ params }: { params: { albumid: string } }) => {
                 </Link>
               )}
 
-              {albumId &&
+            {albumId &&
               albumDetails &&
               albumDetails.status == AlbumProcessingStatus.Draft && (
-
-            <Link
-              href={`/albums/addtrack/${btoa(albumId as string)}`}
-              className={`mt-4 ms-5 mb-2 btn ${Style.albumAddTrack} p-3`}
-            >
-              <i className="me-2 bi bi-plus-circle"></i>
-              Add track
-            </Link>
-
-          )}
+                <Link
+                  href={`/albums/addtrack/${btoa(albumId as string)}`}
+                  className={`mt-4 ms-5 mb-2 btn ${Style.albumAddTrack} p-3`}
+                >
+                  <i className="me-2 bi bi-plus-circle"></i>
+                  Add track
+                </Link>
+              )}
 
             {albumDetails &&
               (albumDetails.status === AlbumProcessingStatus.Draft ||
@@ -252,7 +270,7 @@ const albums = ({ params }: { params: { albumid: string } }) => {
               albumDetails.status == AlbumProcessingStatus.Draft && (
                 <DeleteButton albumId={albumId} />
               )}
-              
+
             {albumId &&
               albumDetails &&
               albumDetails.status === AlbumProcessingStatus.Live && (
@@ -261,11 +279,22 @@ const albums = ({ params }: { params: { albumid: string } }) => {
                   href={`/marketing/add/${btoa(
                     albumId as string
                   )}?albumname=${encodeURIComponent(albumDetails?.title)}`}
-                  className={`mt-4 ms-5 mb-2 btn ${Style.albumAddTrack} p-3`}
+                  className={`mt-4 ms-5 mb-2 btn me-2 ${Style.albumAddTrack} p-3`}
                 >
-                  <i className="me-2 bi bi-megaphone"></i>
+                  <i className="me-2 bi bi-megaphone "></i>
                   Marketing
                 </Link>
+              )}
+
+
+            {albumId &&
+              albumDetails &&
+              (albumDetails.status === AlbumProcessingStatus.Approved ||
+                albumDetails.status === AlbumProcessingStatus.Live) && (
+                <ContentDeliverySheet
+                  contentTitle={albumDetails.title}
+                  approvalDate={albumDetails.updatedAt}
+                />
               )}
 
 
