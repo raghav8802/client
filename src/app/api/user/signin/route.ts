@@ -6,21 +6,13 @@ import bcryptjs from 'bcryptjs';
 import { EmailTemplate } from "@/components/Email/Welcome";
 import { Resend } from 'resend';
 
-//Resend
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(request: NextRequest) {
-    console.log("herer");
-
     await connect();
-    console.log("herer s");
 
     try {
-        const reqBody = await request.json();
-        
-        console.log(reqBody);
-        
-        const { email, password } = reqBody;
+        const { email, password } = await request.json();
 
         // Validate and format email address
         if (!email || !email.includes('@') || !email.includes('.')) {
@@ -49,6 +41,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
+        // Generate a new token for the session
         const tokenData = {
             id: user._id,
             username: user.username
@@ -57,14 +50,12 @@ export async function POST(request: NextRequest) {
         const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, { expiresIn: '5d' });
 
         // Send the welcome email to your own address for testing
-        // eslint-disable-next-line no-unused-vars
-        const { data, error } = await resend.emails.send({
-            from: 'SwaLay <onboarding@swalay.in>', // Correct format with a valid email address
-            to: email, // Use the user's email address
+        const { error } = await resend.emails.send({
+            from: 'SwaLay India <swalay.care@talantoncore.in>',
+            to: email,
             subject: 'Welcome to SwaLay!',
-            react: EmailTemplate({ firstName: user.username }), // Assuming `username` as the first name
+            react: EmailTemplate({ firstName: user.username }),
         });
-        
 
         if (error) {
             console.error("Email sending error:", error);
@@ -76,19 +67,21 @@ export async function POST(request: NextRequest) {
         }
 
         const response = NextResponse.json({
-            message: "Logged In Success",
+            message: "Logged In Successfully",
             success: true,
             status: 200
         });
 
+        // Clear any old tokens to avoid conflicts
+        response.cookies.set("token", "", { httpOnly: true, expires: new Date(0) });
+
+        // Set the new token in cookies
         response.cookies.set("token", token, { httpOnly: true });
 
         return response;
 
     } catch (error: any) {
-        console.log("error :: ");
         console.log(error);
-        
         return NextResponse.json({
             error: error.message,
             success: false,

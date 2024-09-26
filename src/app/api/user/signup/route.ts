@@ -78,6 +78,7 @@ export async function POST(request: NextRequest) {
             password: hashedPassword
         });
            
+        // eslint-disable-next-line no-unused-vars
         const savedUser = await newUser.save();
 
         // await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });

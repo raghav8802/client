@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 import React from 'react';
 
 interface EmailTemplateProps {
@@ -12,14 +10,14 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', color: '#333' }}>
     <h1 style={{ color: '#1d72b8' }}>Welcome to SwaLay, {firstName}!</h1>
     <p>
-      We're thrilled to have you on board. Thank you for joining our community. At SwaLay, we are committed to providing you with the best experience, and we're here to support you every step of the way.
+      We are thrilled to have you on board. Thank you for joining our community. At SwaLay, we are committed to providing you with the best experience, and we are here to support you every step of the way.
     </p>
     <p>
-      If you have any questions or need assistance, please don't hesitate to reach out to us at <a href="mailto:support@swalay.in">support@swalay.in</a>.
+      If you have any questions or need assistance, please do not hesitate to reach out to us at <a href="swalay.care@talantoncore.in">itadmin@talantoncore.in</a>.
     </p>
     <p>
       Best regards,<br />
-      The SwaLay Team
+      SwaLay Team
     </p>
   </div>
 );

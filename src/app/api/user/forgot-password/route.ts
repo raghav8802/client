@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     // Send the email
     const { error } = await resend.emails.send({
-      from: "SwaLay <support@swalay.in>",
+      from: "SwaLay India <swalay.care@talantoncore.in>",
       to: user.email,
       subject: "Password Reset Request",
       react: emailContent
