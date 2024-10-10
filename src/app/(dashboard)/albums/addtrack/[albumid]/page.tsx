@@ -336,7 +336,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-gray-700">
+                  {/* <label className="block text-sm font-medium mb-2 text-gray-700">
                     Singer
                   </label>
 
@@ -355,12 +355,12 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                           {singer.label}
                         </option>
                       ))}
-                  </select>
-                  <div className="inline-block text-blue-700 mt-2 cursor-pointer"
+                  </select> */}
+                  {/* <div className="inline-block text-blue-700 mt-2 cursor-pointer"
                   onClick={() => setIsModalVisible(true)}
                   >
                     <i className="bi bi-plus-circle-fill"></i> Add New Singer
-                  </div>
+                  </div> */}
 
                   {errors.title && (
                     <p className="text-red-500 text-sm mt-1">

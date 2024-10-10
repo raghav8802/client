@@ -229,7 +229,7 @@ const Navbar = () => {
                         href="/albums/rejected"
                         className="nav__dropdown-item"
                       >
-                        Rejeted albums
+                        Rejected albums
                       </Link>
                     </div>
                   </div>
