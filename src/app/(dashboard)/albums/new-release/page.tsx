@@ -70,12 +70,23 @@ const AlbumForm: React.FC = () => {
   });
 
   const albumTags = [
-    { label: "Romantic", value: "Romantic" },
+   { label: "Romantic", value: "Romantic" },
     { label: "Happy", value: "Happy" },
     { label: "Sad", value: "Sad" },
-    { label: "Energetic", value: "Energetic" },
-    { label: "Devotional", value: "Devotional" },
-    { label: "Old Melodies", value: "Old Melodies" },
+    { label: "Dance", value: "Dance" },
+    { label: "Bhangra", value: "Bhangra" },
+    { label: "Partiotic", value: "Partiotic" },
+    { label: "Nostalgic", value: "Nostalgic" },
+    { label: "Inspirational", value: "Inspirational" },
+    { label: "Enthusiastic", value: "Enthusiastic" },
+    { label: "Optimistic", value: "Optimistic" },
+    { label: "Passion", value: "Passion" },
+    { label: "Pessimistic", value: "Pessimistic" },
+    { label: "Spiritual", value: "Spiritual" },
+    { label: "Peppy", value: "Peppy" },
+    { label: "Philosophical", value: "Philosophical" },
+    { label: "Mellow", value: "Mellow" },
+    { label: "Calm", value: "Calm" },
   ];
   const [selectedTags, setSelectedTags] = useState<TagOption[]>([]);
   const [isUploading, setIsUploading] = useState(false);
