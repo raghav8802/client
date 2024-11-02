@@ -273,7 +273,7 @@ const AlbumForm: React.FC = () => {
               <div className="col-span-8 space-y-6 ">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Song Title
+                    Song Title <span className="formRequired" title="Required field">*</span>
                   </label>
                   <input
                     type="text"
@@ -282,6 +282,7 @@ const AlbumForm: React.FC = () => {
                     onChange={handleChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     placeholder="Title of Album or Song"
+                    required
                   />
                   {errors.title && (
                     <p className="text-red-500 text-sm mt-1">
@@ -293,7 +294,7 @@ const AlbumForm: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Main Artist
+                      Main Artist <span className="formRequired" title="Required field">*</span>
                     </label>
                     <input
                       type="text"
@@ -302,6 +303,7 @@ const AlbumForm: React.FC = () => {
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       placeholder="Name of Artist"
+                      required
                     />
                     {errors.artist && (
                       <p className="text-red-500 text-sm mt-1">
@@ -312,13 +314,14 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Genre
+                      Genre <span className="formRequired" title="Required field">*</span>
                     </label>
                     <select
                       name="genre"
                       value={formData.genre}
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      required
                     >
                       <option value="">Select Genre</option>
                       <option value="Pop">Pop</option>
@@ -360,7 +363,7 @@ const AlbumForm: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Release Date
+                      Release Date <span className="formRequired" title="Required field">*</span>
                     </label>
                     <input
                       type="date"
@@ -368,6 +371,7 @@ const AlbumForm: React.FC = () => {
                       value={formData.releaseDate}
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      required
                     />
                     {errors.releaseDate && (
                       <p className="text-red-500 text-sm mt-1">
@@ -378,13 +382,14 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Language
+                      Language <span className="formRequired" title="Required field">*</span>
                     </label>
                     <select
                       name="language"
                       value={formData.language}
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      required
                     >
                       <option value="">Select Song Language</option>
                       <option value="Hindi">Hindi</option>
@@ -431,7 +436,7 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      P Line
+                      P Line <span className="formRequired" title="Required field">*</span>
                     </label>
 
                     <select
@@ -439,6 +444,7 @@ const AlbumForm: React.FC = () => {
                       defaultValue={formData.pLine}
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      required
                     >
                       <option value={formData.pLine}>℗ {formData.pLine}</option>
                     </select>
@@ -451,13 +457,14 @@ const AlbumForm: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      C Line
+                      C Line <span className="formRequired" title="Required field">*</span>
                     </label>
                     <select
                       name="cLine"
                       defaultValue={formData.cLine}
                       onChange={handleChange}
                       className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      required
                     >
                       <option value={formData.cLine}>© {formData.pLine}</option>
                     </select>
@@ -489,7 +496,7 @@ const AlbumForm: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Album Cover (File Type: png, jpg | File Size: 3000 x 3000)
+                    Album Cover (File Type: png, jpg | File Size: 3000 x 3000) <span className="formRequired" title="Required field">*</span>
                   </label>
                   <div
                     {...getRootProps()}

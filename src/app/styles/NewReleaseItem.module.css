@@ -1,9 +1,9 @@
 .newReleaseItem{
-    width: 225px;
+    width: 15%;
     height: 260px;
     cursor: pointer;
     background-color: #fff;
-    padding: 7px;
+    padding: 3px;
     border-radius: 3px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     /* border: 2px solid red; */

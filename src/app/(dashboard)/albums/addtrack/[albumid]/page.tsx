@@ -31,13 +31,11 @@ type ArtistTypeOption = {
 };
 
 export default function NewTrack({ params }: { params: { albumid: string } }) {
-  
   const albumIdParams = params.albumid;
   const [albumId, setAlbumId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // for new artist modal control
-
 
   const context = useContext(UserContext);
   const labelId = context?.user?._id;
@@ -47,7 +45,6 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
     if (labelId) {
       fetchArtist(labelId);
     }
-
   };
 
   const router = useRouter();
@@ -216,12 +213,23 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
         data[key] = value;
       });
 
-      console.log(data);
-      console.log("selected other artist");
-      console.log(selectedSingers);
-      console.log(selectedComposers);
-      console.log(selectedLyricists);
-      console.log(selectedProducers);
+
+      if (selectedSingers.length === 0) {
+        toast.error("Please select at least one singer.")
+        return;
+      }
+      if (selectedComposers.length === 0) {
+        toast.error("Please select at least one composer.")
+        return;
+      }
+      if (selectedLyricists.length === 0) {
+        toast.error("Please select at least one lyricist.")
+        return;
+      }
+      if (selectedProducers.length === 0) {
+        toast.error("Please select at least one Producer.")
+        return;
+      }
 
       formData.append(
         "singers",
@@ -242,8 +250,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
 
       setIsUploading(true);
       const response = await apiFormData("/api/track/addtrack", formData);
-      console.log("API response:");
-      console.log(response);
+      
 
       if (response.success) {
         toast.success("Song uploaded successfully!");
@@ -292,13 +299,17 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 {/* {albumId && (<input type="hidden" name="albumid" value={albumId} />)} */}
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
-                    Song Title
+                    Song Title{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
                   </label>
                   <input
                     name="songName"
                     type="text"
                     placeholder="Song Title"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   />
                   {errors.title && (
                     <p className="text-red-500 text-sm mt-1">
@@ -311,13 +322,17 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                   <div className="col-span-6 space-y-6">
                     <div>
                       <label className="block text-sm font-medium mb-2 text-gray-700">
-                        Audio File (Max 128M)
+                        Audio File (Max 128M){" "}
+                        <span className="formRequired" title="Required field">
+                          *
+                        </span>
                       </label>
                       <input
                         name="audioFile"
                         type="file"
                         accept="audio/mpeg, audio/wav"
                         className="w-full py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                       />
                       {errors.audioFile && (
                         <p className="text-red-500 text-sm mt-1">
@@ -327,11 +342,9 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     </div>
                   </div>
                   <div className="col-span-6 space-y-6">
-
                     <div>
-                      <CallerTune/>
+                      <CallerTune />
                     </div>
-                    
                   </div>
                 </div>
 
@@ -371,7 +384,10 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
 
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
-                    Singers
+                    Singers{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
                   </label>
                   <MultiSelect
                     hasSelectAll={false}
@@ -380,15 +396,21 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     onChange={handleSelectChange("singer")}
                     labelledBy="Select Singers"
                   />
-                  <div className="inline-block text-blue-700 mt-2 cursor-pointer"
-                  onClick={() => setIsModalVisible(true)}
+                  <div
+                    className="inline-block text-blue-700 mt-2 cursor-pointer"
+                    onClick={() => setIsModalVisible(true)}
                   >
                     <i className="bi bi-plus-circle-fill"></i> Add More Singer
                   </div>
                 </div>
 
                 <div>
-                  <h3>Lyricists</h3>
+                  <h3>
+                    Lyricists{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
+                  </h3>
                   <MultiSelect
                     hasSelectAll={false}
                     options={formatOptions(artistData.lyricist)}
@@ -396,15 +418,22 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     onChange={handleSelectChange("lyricist")}
                     labelledBy="Select Lyricists"
                   />
-                  <div className="inline-block text-blue-700 mt-2 cursor-pointer"
-                  onClick={() => setIsModalVisible(true)}
+                  <div
+                    className="inline-block text-blue-700 mt-2 cursor-pointer"
+                    onClick={() => setIsModalVisible(true)}
                   >
-                    <i className="bi bi-plus-circle-fill"></i> Add More Lyricists
+                    <i className="bi bi-plus-circle-fill"></i> Add More
+                    Lyricists
                   </div>
                 </div>
 
                 <div>
-                  <h3>Composers</h3>
+                  <h3>
+                    Composers{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
+                  </h3>
                   <MultiSelect
                     hasSelectAll={false}
                     options={formatOptions(artistData.composer)}
@@ -412,15 +441,21 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     onChange={handleSelectChange("composer")}
                     labelledBy="Select Composers"
                   />
-                  <div className="inline-block text-blue-700 mt-2 cursor-pointer"
-                  onClick={() => setIsModalVisible(true)}
+                  <div
+                    className="inline-block text-blue-700 mt-2 cursor-pointer"
+                    onClick={() => setIsModalVisible(true)}
                   >
                     <i className="bi bi-plus-circle-fill"></i> Add More Composer
                   </div>
                 </div>
 
                 <div>
-                  <h3>Producers</h3>
+                  <h3>
+                    Producers{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
+                  </h3>
                   <MultiSelect
                     hasSelectAll={false}
                     options={formatOptions(artistData.producer)}
@@ -428,23 +463,27 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     onChange={handleSelectChange("producer")}
                     labelledBy="Select Producers"
                   />
-                  <div className="inline-block text-blue-700 mt-2 cursor-pointer"
-                  onClick={() => setIsModalVisible(true)}
+                  <div
+                    className="inline-block text-blue-700 mt-2 cursor-pointer"
+                    onClick={() => setIsModalVisible(true)}
                   >
                     <i className="bi bi-plus-circle-fill"></i> Add More Producer
                   </div>
                 </div>
-
               </div>
 
               <div className="col-span-4 space-y-6 ">
                 <div className="flex flex-col">
                   <label className="block text-sm font-medium mb-2 text-gray-700">
-                    Track Category
+                    Track Category{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
                   </label>
                   <select
                     name="category"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   >
                     <option value="">Select Song Category</option>
                     <option value="POP">POP</option>
@@ -464,11 +503,15 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
 
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
-                    Track Type
+                    Track Type{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
                   </label>
                   <select
                     name="trackType"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   >
                     <option value="">Select Track Type</option>
                     <option value="Vocal">Vocal</option>
@@ -482,11 +525,15 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
-                    Version
+                    Version{" "}
+                    <span className="formRequired" title="Required field">
+                      *
+                    </span>
                   </label>
                   <select
                     name="version"
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                   >
                     <option value="Remix">Remix</option>
                     <option value="Original">Original</option>
@@ -518,4 +565,3 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
     </div>
   );
 }
-

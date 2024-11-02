@@ -5,7 +5,6 @@ import Track from "@/models/track";
 import { uploadTrackToS3 } from "@/dbConfig/uploadFileToS3";
 import Album from "@/models/albums";
 
-
 export async function POST(req: NextRequest) {
   try {
     await connect();
@@ -20,16 +19,36 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const lastTrack = await Track.findOne().sort({ _id: -1 });
+    console.log("**************");
+    // const lastTrack = await Track.findOne().sort({ _id: -1 }); // find last track and where isrc is not blank or null
+    const lastTrack = await Track.findOne().select('isrc').sort({ isrc: -1 }); // find last track and where isrc is not blank or null
+    // const lastTrack = await Track.findOne({
+    //   $and: [{ isrc: { $ne: null } }, { isrc: { $ne: "" } }],
+    // }).sort({ _id: -1 });
+
+    console.log("lastTrack :: ");
+    console.log(lastTrack);
 
     // Generate the next ISRC
-    let newISRC = "INT63" + new Date().getFullYear().toString().slice(-2) + "03001"; // Default value
+    // let newISRC = "INT63" + new Date().getFullYear().toString().slice(-2) + "03001"; // Default value
+    let newISRC = "";
     if (lastTrack && lastTrack.isrc) {
       const lastISRC = parseInt(lastTrack.isrc.slice(-5)); // Extract the sequence number
       const nextISRC = lastISRC + 1;
-      newISRC = `INT63${new Date().getFullYear().toString().slice(-2)}${String(nextISRC).padStart(5, "0")}`;
+      newISRC = `INT63${new Date().getFullYear().toString().slice(-2)}${String(
+        nextISRC
+      ).padStart(5, "0")}`;
+    }else{
+      return NextResponse.json({
+        message: "ISRC assignment error",
+        success: false,
+        status: 500,
+      });
     }
 
+    console.log("newISRC :: ");
+    console.log(newISRC);
+    console.log("=------------------");
 
     const data = {
       albumId: new mongoose.Types.ObjectId(albumId),
@@ -47,11 +66,9 @@ export async function POST(req: NextRequest) {
       trackType: formData.get("trackType")?.toString() ?? "",
     };
 
-    console.log("data in add track ---")
+    console.log("data in add track ---");
     console.log(data);
     console.log("----------------");
-    
-    
 
     const audioFile = formData.get("audioFile") as File;
 
@@ -92,18 +109,17 @@ export async function POST(req: NextRequest) {
     });
     const savedTrack = await newTrack.save();
 
-    // here i want to update total track count to increase 1 but album id in album schema 
+    // here i want to update total track count to increase 1 but album id in album schema
     await Album.findByIdAndUpdate(albumId, {
       $inc: { totalTracks: 1 }
     });
 
     return NextResponse.json({
       message: "Success! Track saved",
-      data: savedTrack,
+      // data: savedTrack,
       success: true,
       status: 201,
     });
-
   } catch (error: any) {
     console.error("Error creating track:", error);
 
