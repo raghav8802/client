@@ -3,6 +3,7 @@ import Style from "../../../styles/NewReleaseItem.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
+
 interface NewReleaseItemProps {
   imageSrc: string;
   albumName: string;

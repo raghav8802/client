@@ -98,7 +98,7 @@ const page = () => {
 
   </div> */}
 
-<div className="w-full flex items-center justify-start">
+<div className="w-full flex items-center justify-start  flex-wrap">
 
       {marketingData &&
         marketingData.map((album) => (

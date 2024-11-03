@@ -600,6 +600,12 @@ footer {
   z-index: 999;
 }
 
+.formRequired{
+  color: red;
+  font-size: 19px;
+  cursor: pointer;
+}
+
 
 
 
