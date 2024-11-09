@@ -32,6 +32,7 @@ function CallerTune() {
         onChange={handleTimeChange}
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         maxLength={8}
+        required
       />
       {errors.callerTuneTime && (
         <p className="text-red-500 text-sm mt-1">

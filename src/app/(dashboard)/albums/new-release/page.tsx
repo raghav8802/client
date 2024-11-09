@@ -273,7 +273,7 @@ const AlbumForm: React.FC = () => {
               <div className="col-span-8 space-y-6 ">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Song Title <span className="formRequired" title="Required field">*</span>
+                    Song Title <span className="formRequired" title="Required field"></span>
                   </label>
                   <input
                     type="text"
@@ -294,7 +294,7 @@ const AlbumForm: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Main Artist <span className="formRequired" title="Required field">*</span>
+                      Main Artist <span className="formRequired" title="Required field"></span>
                     </label>
                     <input
                       type="text"
@@ -314,7 +314,7 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Genre <span className="formRequired" title="Required field">*</span>
+                      Genre <span className="formRequired" title="Required field"></span>
                     </label>
                     <select
                       name="genre"
@@ -363,7 +363,7 @@ const AlbumForm: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Release Date <span className="formRequired" title="Required field">*</span>
+                      Release Date <span className="formRequired" title="Required field"></span>
                     </label>
                     <input
                       type="date"
@@ -382,7 +382,7 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Language <span className="formRequired" title="Required field">*</span>
+                      Language <span className="formRequired" title="Required field"></span>
                     </label>
                     <select
                       name="language"
@@ -426,6 +426,7 @@ const AlbumForm: React.FC = () => {
                       <option value="Gharwali">Gharwali</option>
                       <option value="Sanskrit">Sanskrit</option>
                       <option value="Himchali">Himchali</option>
+                      <option value="Instrumental">Instrumental</option>
                     </select>
                     {errors.language && (
                       <p className="text-red-500 text-sm mt-1">
@@ -436,7 +437,7 @@ const AlbumForm: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      P Line <span className="formRequired" title="Required field">*</span>
+                      P Line <span className="formRequired" title="Required field"></span>
                     </label>
 
                     <select
@@ -457,7 +458,7 @@ const AlbumForm: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      C Line <span className="formRequired" title="Required field">*</span>
+                      C Line <span className="formRequired" title="Required field"></span>
                     </label>
                     <select
                       name="cLine"
@@ -496,7 +497,7 @@ const AlbumForm: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Album Cover (File Type: png, jpg | File Size: 3000 x 3000) <span className="formRequired" title="Required field">*</span>
+                    Album Cover (File Type: png, jpg | File Size: 3000 x 3000) <span className="formRequired" title="Required field"></span>
                   </label>
                   <div
                     {...getRootProps()}
