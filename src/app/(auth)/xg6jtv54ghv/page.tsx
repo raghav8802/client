@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { apiPost } from '@/helpers/axiosRequest'
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation'
+import { loadScript } from '@/helpers/loadScript'
+import { indianStates } from '@/constants/states'
 
 
 const register = () => {
@@ -18,7 +20,8 @@ const register = () => {
     contact: "",
     confirmPassword: "",
     username: "",
-    type: "normal"
+    type: "normal",
+    state: ""
 }
 
   const [user, setUser] = useState(initialState)
@@ -45,20 +48,77 @@ const register = () => {
   })
 
 
- 
+  const initializeRazorpay = async () => {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+    if (!res) {
+      toast.error('Razorpay SDK failed to load')
+      return false
+    }
+    return true
+  }
 
+  const handlePayment = async () => {
+    const res = await initializeRazorpay()
+    if (!res) return
+
+    // Create order on backend
+    try {
+      const orderResponse = await apiPost('http://localhost:3000/api/payments/create-order', {
+        amount: 82482 // amount in paise
+      })
+
+      if (!orderResponse.success) {
+        toast.error(orderResponse.message)
+        return
+      }
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: 82482,
+        currency: "INR",
+        name: "Swalay Music",
+        description: "Registration Charges",
+        order_id: orderResponse.orderId,
+        handler: async (response: any) => {
+          try {
+            // Verify payment
+            const verifyResponse = await apiPost('http://localhost:3000/api/payments/verify-payment', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            })
+
+            if (verifyResponse.success) {
+              // If payment verification successful, proceed with signup
+              await onSignUp()
+            } else {
+              toast.error('Payment verification failed')
+            }
+          } catch (error) {
+            toast.error('Payment verification failed')
+          }
+        },
+        prefill: {
+          name: user.username,
+          email: user.email,
+          contact: user.contact
+        },
+      }
+
+      const paymentObject = new (window as any).Razorpay(options)
+      paymentObject.open()
+    } catch (error) {
+      toast.error('Failed to create payment order')
+    }
+  }
 
   const onSignUp = async () => {
-    
     if (user.password !== user.confirmPassword) {
-
-      toast.error("Password are not matched")
+      toast.error("Passwords do not match")
       return
     }
 
-
     const { confirmPassword, ...userData } = user;
-
 
     try {
       const response = await apiPost('http://localhost:3000/api/user/signup', userData)
@@ -81,11 +141,6 @@ const register = () => {
 
       toast.error("Network Error: check your connection")
     }
-
-
-
-
-
   }
 
 
@@ -97,7 +152,7 @@ const register = () => {
       <div className={` ${Styles.containerLeft}`}>
         <div className={Styles.containerLeftInner}>
 
-          <h2 className={Styles.heading}>Register</h2>
+          <h2 className={Styles.heading}>Account Activation</h2>
           {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> */}
 
           <div>
@@ -130,6 +185,26 @@ const register = () => {
                   onChange={(e) => setUser({ ...user, contact: e.target.value })}
                    />
 
+              </div>
+
+              <div className={Styles.formGroup}>
+                <label className={Styles.inputLable} htmlFor="state">
+                  <i className="bi bi-geo-alt-fill"></i>
+                </label>
+                <select 
+                  className={Styles.inputField}
+                  name="state" 
+                  id="state"
+                  value={user.state}
+                  onChange={(e) => setUser({ ...user, state: e.target.value })}
+                >
+                  <option value="">Select State</option>
+                  {indianStates.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className={Styles.formGroup}>
@@ -170,17 +245,16 @@ const register = () => {
                   onChange={() => setIsAgreementChecked(!isAgreementChecked)}
                 />
                 <label className={`${Styles.inputLable} ${Styles.labelagreeterm}`} htmlFor="agree-term" >
-                  <span><span></span></span>I agree all statements in <Link href="#" className={Styles.termservice}>Terms of service</Link></label>
+                  <span><span></span></span>I agree all statements in Terms of SwaLay-Digital</label>
               </div>
               <div className={`${Styles.formGroup} ${Styles.formbutton} `}>
                 <button
                   className={isDisable ? Styles.submitButtonDisable : Styles.submitButton}
-                  onClick={onSignUp}
+                  onClick={handlePayment}
                   disabled={isDisable}
                 >Register</button>
               </div>
-              <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  >
-                Already have an account?  <Link href="/signin" className={Styles.termservice}>Sign In</Link></p>
+              
             </div>
 
           </div>

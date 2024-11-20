@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
                 name: username,
                 email: email,
                 contact: contact,
-                type: type || 'vendor',
+                type: 'vendor',
                 reference_id: reference_id || '',
                 notes: notes || {},
             }),

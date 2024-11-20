@@ -15,6 +15,7 @@ export interface iLabel extends Document {
   joinedAt: Date;
   subscriptionEndDate: Date;
   signature: string;
+  state: string;
 }
 
 const LabelSchema: Schema<iLabel> = new Schema({
@@ -85,6 +86,11 @@ const LabelSchema: Schema<iLabel> = new Schema({
   signature: {
     type: String,
     default: null,
+  },
+  state: {
+    type: String,
+    required: [true, 'State is required'],
+    trim: true,
   },
 });
 
