@@ -20,6 +20,7 @@ const register = () => {
     contact: "",
     confirmPassword: "",
     username: "",
+    labelName: "",
     type: "normal",
     state: ""
 }
@@ -31,7 +32,7 @@ const register = () => {
 
   useEffect(() => {
 
-    if (user.username.length > 0 && user.email.length > 0 && user.password.length > 0 && user.confirmPassword.length > 0 &&  user. contact.length > 0 && isAgreementChecked) {
+    if (user.username.length > 0 && user.labelName.length > 0 && user.email.length > 0 && user.password.length > 0 && user.confirmPassword.length > 0 &&  user. contact.length > 0 && user.state.length > 0 && isAgreementChecked) {
 
       setIsDisable(false)
     } else {
@@ -166,6 +167,20 @@ const register = () => {
                   name="name" id="name" placeholder="Your Name"
                   value={user.username}
                   onChange={(e) => setUser({ ...user, username: e.target.value })}
+                />
+              </div>
+              <div className={Styles.formGroup}>
+                <label className={Styles.inputLable} htmlFor="labelName">
+                  <i className="bi bi-music-note"></i>
+                </label>
+                <input 
+                  className={Styles.inputField} 
+                  type="text"
+                  name="labelName" 
+                  id="labelName" 
+                  placeholder="Label Name"
+                  value={user.labelName}
+                  onChange={(e) => setUser({ ...user, labelName: e.target.value })}
                 />
               </div>
               <div className={Styles.formGroup}>
