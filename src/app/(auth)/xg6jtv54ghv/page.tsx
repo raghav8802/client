@@ -64,7 +64,7 @@ const register = () => {
 
     // Create order on backend
     try {
-      const orderResponse = await apiPost('http://localhost:3000/api/payments/create-order', {
+      const orderResponse = await apiPost('http://app.swalayplus.in/api/payments/create-order', {
         amount: 82482 // amount in paise
       })
 
@@ -83,7 +83,7 @@ const register = () => {
         handler: async (response: any) => {
           try {
             // Verify payment
-            const verifyResponse = await apiPost('http://localhost:3000/api/payments/verify-payment', {
+            const verifyResponse = await apiPost('http://app.swalayplus.in/api/payments/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature
@@ -122,7 +122,7 @@ const register = () => {
     const { confirmPassword, ...userData } = user;
 
     try {
-      const response = await apiPost('http://localhost:3000/api/user/signup', userData)
+      const response = await apiPost('http://app.swalayplus.in/api/user/signup', userData)
     
 
       if (!response.success) {
