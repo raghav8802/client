@@ -228,6 +228,9 @@ const page = ({ params }: { params: { albumid: string } }) => {
 
     try {
       const result = await apiFormData(`/api/marketing/add`, formDataToSubmit);
+      console.log("marketing api result");
+      console.log(result);
+      
 
       if (result.success) {
         toast.success("Form submitted successfully!");
