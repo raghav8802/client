@@ -300,9 +300,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
                     Song Title{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </label>
                   <input
                     name="songName"
@@ -323,9 +321,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                     <div>
                       <label className="block text-sm font-medium mb-2 text-gray-700">
                         Audio File (Max 128M){" "}
-                        <span className="formRequired" title="Required field">
-                          *
-                        </span>
+                        
                       </label>
                       <input
                         name="audioFile"
@@ -341,7 +337,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                       )}
                     </div>
                   </div>
-                  <div className="col-span-6 space-y-6">
+                  <div className="col-span-6 space-y-6" >
                     <div>
                       <CallerTune />
                     </div>
@@ -385,9 +381,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
                     Singers{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                     
                   </label>
                   <MultiSelect
                     hasSelectAll={false}
@@ -407,9 +401,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <h3>
                     Lyricists{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </h3>
                   <MultiSelect
                     hasSelectAll={false}
@@ -430,9 +422,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <h3>
                     Composers{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </h3>
                   <MultiSelect
                     hasSelectAll={false}
@@ -452,9 +442,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <h3>
                     Producers{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </h3>
                   <MultiSelect
                     hasSelectAll={false}
@@ -476,9 +464,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div className="flex flex-col">
                   <label className="block text-sm font-medium mb-2 text-gray-700">
                     Track Category{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </label>
                   <select
                     name="category"
@@ -504,9 +490,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
                     Track Type{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </label>
                   <select
                     name="trackType"
@@ -526,9 +510,7 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
                 <div>
                   <label className="block text-sm font-medium mb-2 text-gray-700">
                     Version{" "}
-                    <span className="formRequired" title="Required field">
-                      *
-                    </span>
+                      
                   </label>
                   <select
                     name="version"

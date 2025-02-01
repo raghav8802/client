@@ -237,7 +237,8 @@ const albums = ({ params }: { params: { albumid: string } }) => {
           <div className="flex items-center">
             {albumId &&
               albumDetails &&
-              albumDetails.status == AlbumProcessingStatus.Draft || albumDetails?.status == AlbumProcessingStatus.Rejected  && (
+              (albumDetails.status === AlbumProcessingStatus.Draft ||
+                albumDetails.status === AlbumProcessingStatus.Rejected)&& (
                 <Link
                   href={`/albums/edit/${btoa(albumId as string)}`}
                   className={`mt-4 mb-2 ${Style.albumEditBtn} p-3`}
@@ -249,7 +250,8 @@ const albums = ({ params }: { params: { albumid: string } }) => {
 
             {albumId &&
               albumDetails &&
-              albumDetails.status == AlbumProcessingStatus.Draft && (
+              (albumDetails.status === AlbumProcessingStatus.Draft ||
+                albumDetails.status === AlbumProcessingStatus.Rejected) && (
                 <Link
                   href={`/albums/addtrack/${btoa(albumId as string)}`}
                   className={`mt-4 ms-5 mb-2 btn ${Style.albumAddTrack} p-3`}

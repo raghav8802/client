@@ -460,6 +460,7 @@ const EditAlbumForm = ({ params }: { params: { albumid: string } }) => {
                   <option value="Gharwali">Gharwali</option>
                   <option value="Sanskrit">Sanskrit</option>
                   <option value="Himchali">Himchali</option>
+                  <option value="Instrumental">Instrumental</option>
                 </select>
 
                 {errors.language && (

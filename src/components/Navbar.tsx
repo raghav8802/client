@@ -259,7 +259,7 @@ const Navbar = () => {
                   onClick={handleLinkClick}
                 >
                   <i className="bi bi-youtube nav__icon"></i>
-                  <span className="nav__name ">Copyright</span>
+                  <span className="nav__name ">Copyrights</span>
                 </Link>
 
                 <Link

@@ -177,6 +177,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
 
           {trackDetails &&
             trackDetails.albumStatus !== 4 &&
+            trackDetails.albumStatus !== 1 &&
             trackDetails.albumStatus !== 2 && (
               <div>
                 <Link href={`/albums/edittrack/${btoa(trackId)}`}>
@@ -211,21 +212,9 @@ const TrackDetails: React.FC<TrackListProps> = ({
               )}`}
             >
               Add Lyrics <i className="bi bi-pen-fill"></i>
-            </Link>
-
-            {/* <i className="mx-5 bi bi-share-fill cursor-pointer text-2xl" onClick={ () => onShare('/shorturl/music')} ></i>
-            <Link href={'/shorturl/music/'}>
-             <i className="bi bi-eye-fill cursor-pointer text-2xl"></i>
-            </Link> */}
+            </Link>          
           </div>
         )}
-
-        {/* <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-          Mood
-        </span>
-        <span className="ms-3 inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-          Genre
-        </span> */}
 
         <div className="mt-3">
           <Tabs defaultValue="track" className="w-100">
@@ -263,7 +252,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
 
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Crbt:
+                      Caller Tune:
                     </span>{" "}
                     {trackDetails && trackDetails.crbt}
                   </li>
@@ -275,9 +264,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
               <div className={`mt-2  ${Style.trackInfoListContainer}`}>
                 <ul className="p-3">
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
-                    <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Primary Singer:
-                    </span>{" "}
+                   
                     {trackDetails?.primarySinger && (
                       <Link href={`/artist/${trackDetails.primarySinger._id}`}>
                         {trackDetails.primarySinger.artistName}
@@ -286,7 +273,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
                   </li>
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Other Singers:{" "}
+                      Singer:{" "}
                     </span>
                     {/* {trackDetails?.singers?.map((singer) => (
                       <span key={singer._id}>
@@ -308,7 +295,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
                   </li>
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Lyricists:
+                      Lyricist:
                     </span>{" "}
                     {trackDetails?.lyricists?.map((lyricist, index) => (
                       <span key={lyricist._id}>
@@ -322,7 +309,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
                   </li>
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Composers:
+                      Composer:
                     </span>{" "}
                     {trackDetails?.composers?.map((composer) => (
                       <span key={composer._id}>
@@ -334,7 +321,7 @@ const TrackDetails: React.FC<TrackListProps> = ({
                   </li>
                   <li className={`mb-2 ${Style.albumInfoItem}`}>
                     <span className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      Producers:
+                      Music Producer:
                     </span>{" "}
                     {trackDetails?.producers?.map((producer) => (
                       <span key={producer._id}>

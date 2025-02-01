@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
     try {
         const reqBody = await request.json();
-        const { username, email, password, contact, type, reference_id, notes } = reqBody;
+        const { username, email, password, contact,  reference_id, notes } = reqBody;
 
         if (!username || !email || !contact) {
             console.log("Validation Failed: Missing required fields");
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        console.log("Creating Razorpay Contact with:", { username, email, contact , type});
+        console.log("Creating Razorpay Contact with:", { username, email, contact , });
 
         const razorpayApiKey = process.env.RAZORPAY_KEY_ID;
         const razorpayApiSecret = process.env.RAZORPAY_KEY_SECRET;
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
                 name: username,
                 email: email,
                 contact: contact,
-                type: type || 'vendor',
+                type: 'vendor',
                 reference_id: reference_id || '',
                 notes: notes || {},
             }),
