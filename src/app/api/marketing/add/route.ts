@@ -141,6 +141,7 @@ export async function POST(req: NextRequest) {
     }
 
   } catch (error) {
+    console.log("marketing api error here ");
     console.log(error);
     
     return NextResponse.json({

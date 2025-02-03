@@ -1,19 +1,19 @@
 import React, { useState, ChangeEvent } from "react";
+import toast from "react-hot-toast";
 
 function CallerTune() {
-  const [callerTuneTime, setCallerTuneTime] = useState<string>("");
-  const [errors, setErrors] = useState<{ callerTuneTime?: { _errors: string[] } }>({});
+  const [callerTuneTime, setCallerTuneTime] = useState<string>("00:00:00");
+
+  const validateTimeFormat = (time: string): boolean => {
+    const timePattern = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/; // Ensures HH:MM:SS in 24-hour format
+    return timePattern.test(time);
+  };
 
   const handleTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/[^0-9]/g, ""); // Remove all non-numeric characters
-    if (value.length > 6) value = value.slice(0, 6); // Limit to 6 digits
+    const value = e.target.value;
 
-    if (value.length >= 3) {
-      value = `${value.slice(0, 2)}:${value.slice(2, 4)}:${value.slice(4, 6)}`;
-    } else if (value.length >= 2) {
-      value = `${value.slice(0, 2)}:${value.slice(2, 4)}`;
-    } else {
-      value = value;
+    if (!validateTimeFormat(value)) {
+      toast.error("Invalid format! Use HH:MM:SS");
     }
 
     setCallerTuneTime(value);
@@ -27,18 +27,13 @@ function CallerTune() {
       <input
         name="crbt"
         type="text"
-        placeholder="00:00:00"
+        placeholder="HH:MM:SS"
         value={callerTuneTime}
         onChange={handleTimeChange}
         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         maxLength={8}
         required
       />
-      {errors.callerTuneTime && (
-        <p className="text-red-500 text-sm mt-1">
-          {errors.callerTuneTime._errors[0]}
-        </p>
-      )}
     </div>
   );
 }
