@@ -118,13 +118,6 @@ const page = ({ params }: { params: { albumid: string } }) => {
   ) => {
     const { name, value } = e.target;
 
-    if (name === "artistInstagramUrl") {
-      if (!validateInstagramUrl(value)) {
-        toast.error("Invalid Instagram URL format");
-        return; // Stop further execution if the URL is invalid
-      }
-    }
-
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -134,9 +127,10 @@ const page = ({ params }: { params: { albumid: string } }) => {
   // Validate Instagram URL
   const validateInstagramUrl = (url: string): boolean => {
     const instagramPattern =
-      /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._-]+\/?$/;
+      /^(https?:\/\/)?(www\.)?instagram\.com\/([a-zA-Z0-9._-]+)\/?$/;
     return instagramPattern.test(url);
   };
+  
 
   // Handle file validation with Dropzone
   const handleDrop = (acceptedFiles: File[]) => {
@@ -170,7 +164,13 @@ const page = ({ params }: { params: { albumid: string } }) => {
   // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmit(true);
+    // setIsSubmit(true);
+    
+
+    if (!validateInstagramUrl(formData.artistInstagramUrl.trim())) {
+        toast.error("Invalid Instagram URL format");
+        return; 
+      }
 
     // Trim input and check for empty fields
     const trimmedFormData = {
@@ -244,6 +244,8 @@ const page = ({ params }: { params: { albumid: string } }) => {
       toast.error("Internal server error");
       setIsSubmit(false);
     }
+
+
   };
 
   useEffect(() => {
@@ -387,7 +389,7 @@ const page = ({ params }: { params: { albumid: string } }) => {
                 value={formData.artistInstagramUrl}
                 onChange={handleChange}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Artist's Instagram URL"
+                 placeholder="Enter Instagram URL (e.g., https://www.instagram.com/username)"
               />
               {errors.artistInstagramUrl && (
                 <p className="text-red-500 text-sm mt-1">
@@ -407,8 +409,9 @@ const page = ({ params }: { params: { albumid: string } }) => {
                 value={formData.promotionLinks}
                 onChange={handleChange}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Promotion Links or Music Video Link"
+                placeholder="Enter link (e.g., YouTube, Instagram, Spotify)"
               />
+
               {errors.promotionLinks && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.promotionLinks[0]}
