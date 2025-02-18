@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     await connect();
 
     const body = await req.json();
-    const { name, email, labelId, subject, message } = body;
+    const { name, email, labelId, subject, message, reply, status, field1, field2 } = body;
 
     // Validate required fields
     if (!name || !email || !labelId || !subject || !message) {
@@ -45,6 +45,10 @@ export async function POST(req: NextRequest) {
       labelId,
       subject,
       message,
+      reply: reply || '',
+      status: status || 'pending',
+      field1: field1 || '',
+      field2: field2 || ''
     });
 
     const savedSupport = await newSupport.save();

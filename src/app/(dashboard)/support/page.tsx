@@ -13,6 +13,10 @@ interface FormData {
   subject: string;
   message: string;
   labelId?: string;
+  reply?: string;
+  status?: string;
+  field1?: string;
+  field2?: string;
 }
 
 export default function Component() {
@@ -23,6 +27,10 @@ export default function Component() {
     subject: "",
     message: "",
     labelId: "",
+    reply: "",
+    status: "pending",
+    field1: "",
+    field2: ""
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +43,10 @@ export default function Component() {
         subject: "",
         message: "",
         labelId: context.user._id || "",
+        reply: "",
+        status: "pending",
+        field1: "",
+        field2: ""
       });
     }
   }, [context]);

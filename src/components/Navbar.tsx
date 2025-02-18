@@ -279,9 +279,9 @@ const Navbar = () => {
                   <span className="nav__name">Profile</span>
                 </Link>
 
-                <Link href="/support" className="nav__link">
+                <Link href="/my-tickets" className="nav__link">
                   <i className="bi bi-chat-left nav__icon"></i>
-                  <span className="nav__name">Support</span>
+                  <span className="nav__name">my-tickets</span>
                 </Link>
               </div>
             </div>
