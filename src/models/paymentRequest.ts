@@ -1,10 +1,10 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export enum PaymentStatus {
-  PENDING = "Pending",
-  COMPLETED = "Completed",
-  FAILED = "Failed",
-  REJECTED = "Rejected",
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  FAILED = "FAILED",
+  REJECTED = "REJECTED",
 }
 
 interface IPaymentRequest extends Document {

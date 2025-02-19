@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, Cell } from "recharts";
 
 import {
   Card,
@@ -24,6 +24,7 @@ type PaymentData = {
   amount: string;
   status: boolean;
   time: string;
+  type: string; // "Royalty" or "Penalty"
 };
 
 type PaymentChartProps = {
@@ -36,6 +37,7 @@ type PaymentChartProps = {
 type ChartData = {
   date: string;
   amount: number;
+  type: string;
 };
 
 // Update the chart config to fit your data
@@ -54,15 +56,12 @@ const formatChartData = (data: PaymentData[]): ChartData[] => {
       day: "numeric",
       year: "numeric",
     }),
-    amount: parseFloat(item.amount),
+    amount: item.type === "Penalty" ? -parseFloat(item.amount) : parseFloat(item.amount),
+    type: item.type,
   }));
 };
 
-export function PaymentChart({
-  data,
-  totalPayout,
-  availableBalance,
-}: PaymentChartProps) {
+export function PaymentChart({ data, totalPayout, availableBalance }: PaymentChartProps) {
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>("amount");
 
   // Format the data for the chart
@@ -71,10 +70,7 @@ export function PaymentChart({
   // Calculate the total amount
   const total = React.useMemo(
     () =>
-      chartData.reduce(
-        (acc: number, curr: { amount: number }) => acc + curr.amount,
-        0
-      ),
+      chartData.reduce((acc: number, curr: { amount: number }) => acc + curr.amount, 0),
     [chartData]
   );
 
@@ -83,7 +79,7 @@ export function PaymentChart({
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
           <CardTitle>Earning Chart</CardTitle>
-          <CardDescription>Showing total earning</CardDescription>
+          <CardDescription>Showing total earnings</CardDescription>
         </div>
         <div className="flex">
           <button
@@ -97,7 +93,6 @@ export function PaymentChart({
               ₹{total.toLocaleString()}
             </span>
           </button>
-
           <button
             data-active={true}
             className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
@@ -107,14 +102,11 @@ export function PaymentChart({
               ₹{totalPayout.toLocaleString()}
             </span>
           </button>
-
           <button
             data-active={true}
             className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
           >
-            <span className="text-m text-muted-foreground">
-              Available Earning
-            </span>
+            <span className="text-m text-muted-foreground">Available Earning</span>
             <span className="text-lg font-bold leading-none sm:text-3xl">
               ₹{availableBalance.toLocaleString()}
             </span>
@@ -122,17 +114,11 @@ export function PaymentChart({
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
+        <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
           <BarChart
             accessibilityLayer
             data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ left: 12, right: 12 }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -147,13 +133,18 @@ export function PaymentChart({
                 <ChartTooltipContent
                   className="w-[150px]"
                   nameKey="amount"
-                  labelFormatter={(value) => {
-                    return value;
-                  }}
+                  labelFormatter={(value) => value}
                 />
               }
             />
-            <Bar dataKey="amount" fill={`var(--color-amount)`} />
+            <Bar dataKey="amount">
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.amount < 0 ? "#ffb1c1" : "var(--color-amount)"}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>
