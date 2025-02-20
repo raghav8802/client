@@ -45,28 +45,31 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => row.index + 1,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "type",
+    header: () => <div className="">Type</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-      return <div className="text-right font-medium">₹ {amount}</div>;
+      const type = row.getValue("type");
+      // const color = type === "Royalty" ? "text-green-600" : "text-red-600"; // Conditional color
+      return <div className={`font-medium `}>{String(type)}</div>;
     },
   },
   {
-    accessorKey: "type",
-    header: () => <div className="text-right">Type</div>,
+    accessorKey: "amount",
+    header: () => <div className="">Amount</div>,
     cell: ({ row }) => {
-      const type = row.getValue("type") as string;
-      return <div className="text-right font-medium">{type}</div>;
+      const amount = parseFloat(row.getValue("amount"));
+      const type = row.original.type; // Access the type from the row's original data
+      const color = type === "Royalty" ? "text-green-600" : "text-red-600"; // Conditional color
+      const icon = type === "Penalty" ? "-" : "+"; // Conditional color
+      return <div className={`font-medium ${color}`}>{icon} ₹ {amount}</div>;
     },
-  },  
+  },
   {
     accessorKey: "payout_report_url",
     header: () => <div className="text-right">Report</div>,
     cell: ({ row }) => {
       const payout_report_url = row.getValue("payout_report_url") as string | undefined;
-      console.log("payout_report_url: ", payout_report_url);
-  
+      
       return (
         <div className="text-right font-medium p-1">
           {payout_report_url ? (
@@ -146,14 +149,7 @@ export function PaymentList({ data }: { data: Payment[] }) {
     <div className="w-full">
       <h2 className="mt-5 text-3xl font-bold mb-2 capitalize ">Earning History</h2>
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter amounts..."
-          value={(table.getColumn("amount")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("amount")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        
         
       </div>
       <div className="rounded-md border">

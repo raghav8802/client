@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     // Calculate total payout balance from PaymentRequest collection where status is 'COMPLETED'
     const totalPayout = await PaymentRequest.aggregate([
-      { $match: { labelId, status: PaymentStatus.COMPLETED } },
+      { $match: { labelId, status: PaymentStatus.APPROVED } },
       { $group: { _id: null, total: { $sum: "$amount" } } }
     ]);
 

@@ -72,11 +72,11 @@ export const columns: ColumnDef<Payment>[] = [
       let label, color;
 
       switch (status) {
-        case "Pending":
+        case "PENDING":
           label = "Pending";
           color = "yellow";
           break;
-        case "Completed":
+        case "APPROVED":
           label = "Completed";
           color = "green";
           break;
@@ -137,10 +137,7 @@ export function PayoutList({ data }: { data: Payment[] }) {
 
   return (
     <div className="w-full">
-      <h2 className="mt-5 text-3xl font-bold mb-3 capitalize">
-        Payout History
-      </h2>
-      
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>

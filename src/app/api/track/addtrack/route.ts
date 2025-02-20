@@ -19,15 +19,11 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    console.log("**************");
     // const lastTrack = await Track.findOne().sort({ _id: -1 }); // find last track and where isrc is not blank or null
     const lastTrack = await Track.findOne().select('isrc').sort({ isrc: -1 }); // find last track and where isrc is not blank or null
     // const lastTrack = await Track.findOne({
     //   $and: [{ isrc: { $ne: null } }, { isrc: { $ne: "" } }],
     // }).sort({ _id: -1 });
-
-    console.log("lastTrack :: ");
-    console.log(lastTrack);
 
     // Generate the next ISRC
     // let newISRC = "INT63" + new Date().getFullYear().toString().slice(-2) + "03001"; // Default value
@@ -46,9 +42,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    console.log("newISRC :: ");
-    console.log(newISRC);
-    console.log("=------------------");
 
     const data = {
       albumId: new mongoose.Types.ObjectId(albumId),
@@ -66,9 +59,6 @@ export async function POST(req: NextRequest) {
       trackType: formData.get("trackType")?.toString() ?? "",
     };
 
-    console.log("data in add track ---");
-    console.log(data);
-    console.log("----------------");
 
     const audioFile = formData.get("audioFile") as File;
 
@@ -82,8 +72,7 @@ export async function POST(req: NextRequest) {
 
     const songName = (formData.get("songName") as string).trim();
     const songNameNoSpace = songName.replace(/ /g, "-");
-    console.log("::: songNameNoSpace : ->");
-    console.log(songNameNoSpace);
+    
 
     const audioBuffer = Buffer.from(await audioFile.arrayBuffer());
     const audioFileExtension = audioFile.name.split(".").pop();
