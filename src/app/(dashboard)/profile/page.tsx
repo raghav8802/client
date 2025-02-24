@@ -47,6 +47,9 @@ const page = () => {
     gstNo: false,
   });
 
+  const [isEditingLabel, setIsEditingLabel] = useState(false);
+  const [newLabelName, setNewLabelName] = useState(lableName || "SwaLay Digital");
+
   const toggleVisibility = (field: keyof typeof visibleFields) => {
     setVisibleFields((prev) => ({
       ...prev,
@@ -81,6 +84,36 @@ const page = () => {
     fetchBankDetails();
   };
 
+  const handleLabelUpdate = async () => {
+    if (!labelId || labelId !== "6784b1d257ce42ea2334c86a") return;
+    
+    try {
+      const response = await fetch("/api/user/lablenameupdate", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ labelId, newLabelName }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        toast.success("Label name updated successfully");
+        // Update context if needed
+        if (context?.user) {
+          context.user.lable = newLabelName;
+        }
+        setIsEditingLabel(false);
+      } else {
+        toast.error(data.message || "Failed to update label name");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (labelId) {
       fetchBankDetails();
@@ -90,49 +123,7 @@ const page = () => {
   return (
     // <div className="flex" >
     <div className="grid grid-cols-12 gap-4 ">
-      {/* <div className={`col-span-3 h-screen  ${Style.profileSidebar}`}>
-        <div className={`my-4 ${Style.profileImgContainer}`}>
-          <Image
-            src={""}
-            width={250}
-            height={250}
-            alt="profile"
-            className={Style.profileImage}
-          />
-        </div>
-        <div className="mt-5 mb-5">
-          <p className={Style.labelName}>{username}</p>
-          <p className={Style.labelUserName}>{email}</p>
-          <p className={`mt-3 ${Style.labelDescription}`}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere
-            vitae recusandae dolores excepturi, rerum ullam sequi officiis non
-            sit magni fugit animi quo officia quae aliquam. Possimus nam
-            architecto deserunt.
-          </p>
-        </div>
-
-        <div className="flex mt-5 items-center justify-evenly">
-          <Image
-            src={"/images/facebook.png"}
-            width={50}
-            height={50}
-            alt="social"
-          />
-          <Image
-            src={"/images/instagram.png"}
-            width={50}
-            height={50}
-            alt="social"
-          />
-          <Image
-            src={"/images/youtube.png"}
-            width={50}
-            height={50}
-            alt="social"
-          />
-        </div>
-      </div> */}
-      {/* <div className={`col-span-9 h-screen ${Style.profileContainer}`}> */}
+     
       <div className={`col-span-12 h-screen `}>
         <div className={Style.profileContainer}>
           <div className="flex items-center justify-between">
@@ -142,7 +133,47 @@ const page = () => {
           <div className="grid grid-cols-12 gap-4 mt-3 mb-3">
             <div className={`mb-3 col-span-4 `}>
               <p className={Style.labelSubHeader}>Label Name</p>
-              <p>{lableName ? lableName : "SwaLay Digital"}</p>
+              {labelId === "6784b1d257ce42ea2334c86a" ? (
+                <div className="flex items-center gap-2">
+                  {isEditingLabel ? (
+                    <>
+                      <input
+                        type="text"
+                        value={newLabelName}
+                        onChange={(e) => setNewLabelName(e.target.value)}
+                        className="border rounded px-2 py-1"
+                      />
+                      <button
+                        onClick={handleLabelUpdate}
+                        className="text-green-600"
+                      >
+                        <i className="bi bi-check-lg"></i>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsEditingLabel(false);
+                          setNewLabelName(lableName || "SwaLay Digital");
+                        }}
+                        className="text-red-600"
+                      >
+                        <i className="bi bi-x-lg"></i>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <p>{lableName ? lableName : "SwaLay Digital"}</p>
+                      <button
+                        onClick={() => setIsEditingLabel(true)}
+                        className="text-blue-600"
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </button>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <p>{lableName ? lableName : "SwaLay Digital"}</p>
+              )}
             </div>
             <div className={`mb-3 col-span-4 `}>
               <p className={Style.labelSubHeader}>Label Owner Name</p>
