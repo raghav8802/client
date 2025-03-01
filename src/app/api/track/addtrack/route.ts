@@ -62,6 +62,10 @@ export async function POST(req: NextRequest) {
 
     const audioFile = formData.get("audioFile") as File;
 
+    console.log("audioFile from input");
+    console.log(audioFile);
+    
+
     if (!audioFile) {
       return NextResponse.json({
         message: "Audio file is required",
@@ -83,6 +87,10 @@ export async function POST(req: NextRequest) {
       fileName: audioFileName,
       folderName: albumId,
     });
+
+    console.log("----------uploadResult from s3-----------------------");
+    console.log(uploadResult);
+    
 
     if (!uploadResult.status) {
       return NextResponse.json({
