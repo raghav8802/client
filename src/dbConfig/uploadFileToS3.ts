@@ -1,4 +1,13 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, 
+  PutObjectCommand,
+
+  CreateMultipartUploadCommand,
+  UploadPartCommand,
+  CompleteMultipartUploadCommand,
+  AbortMultipartUploadCommand,
+
+
+ } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({
   region: process.env.AWS_S3_REGION!,
@@ -61,14 +70,63 @@ export async function uploadFileToS3({
   }
 }
 
+// export async function uploadTrackToS3({
+//   file,
+//   fileName,
+//   folderName,
+// }: UploadFileToS3Params): Promise<{ status: boolean; fileName: string }> {
+//   try {
+//     const fileBuffer = file;
+//     const uploadFilePath = `albums/07c1a${folderName}ba3/tracks/${fileName}`;
+
+//     // Determine the content type based on the file extension
+//     const fileExtension = fileName.split(".").pop();
+//     let contentType = "application/octet-stream"; // Default content type
+
+//     switch (fileExtension) {
+//       case "mp3":
+//         contentType = "audio/mpeg";
+//         break;
+//       case "wav":
+//         contentType = "audio/wav";
+//         break;
+//       case "flac":
+//         contentType = "audio/flac";
+//         break;
+//       // Add more cases as needed
+//       default:
+//         contentType = "application/octet-stream";
+//     }
+
+//     const params = {
+//       Bucket: process.env.AWS_S3_BUCKET_NAME,
+//       Key: uploadFilePath,
+//       Body: fileBuffer,
+//       ContentType: contentType,
+//     };
+
+//     const command = new PutObjectCommand(params);
+//     await s3Client.send(command);
+//     return { status: true, fileName };
+//   } catch (error: any) {
+//     return { status: true, fileName };
+//   }
+// }
+
+
+
+
 export async function uploadTrackToS3({
   file,
   fileName,
   folderName,
 }: UploadFileToS3Params): Promise<{ status: boolean; fileName: string }> {
+  let UploadId: string | undefined;
+  let uploadFilePath: string | undefined;
+
   try {
     const fileBuffer = file;
-    const uploadFilePath = `albums/07c1a${folderName}ba3/tracks/${fileName}`;
+    uploadFilePath = `albums/07c1a${folderName}ba3/tracks/${fileName}`;
 
     // Determine the content type based on the file extension
     const fileExtension = fileName.split(".").pop();
@@ -89,20 +147,80 @@ export async function uploadTrackToS3({
         contentType = "application/octet-stream";
     }
 
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME,
-      Key: uploadFilePath,
-      Body: fileBuffer,
-      ContentType: contentType,
-    };
+    // Step 1: Initiate Multipart Upload
+    const createMultipartUploadResponse = await s3Client.send(
+      new CreateMultipartUploadCommand({
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: uploadFilePath,
+        ContentType: contentType,
+      })
+    );
 
-    const command = new PutObjectCommand(params);
-    await s3Client.send(command);
+    UploadId = createMultipartUploadResponse.UploadId;
+
+    if (!UploadId) {
+      throw new Error("Failed to initiate multipart upload");
+    }
+
+    // Step 2: Upload Parts
+    const partSize = 5 * 1024 * 1024; // 5 MB per part (adjust as needed)
+    const parts = [];
+    let partNumber = 1;
+
+    for (let start = 0; start < fileBuffer.length; start += partSize) {
+      const end = Math.min(start + partSize, fileBuffer.length);
+      const chunk = fileBuffer.slice(start, end);
+
+      const uploadPartResponse = await s3Client.send(
+        new UploadPartCommand({
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: uploadFilePath,
+          PartNumber: partNumber,
+          UploadId,
+          Body: chunk,
+        })
+      );
+
+      if (!uploadPartResponse.ETag) {
+        throw new Error(`Failed to upload part ${partNumber}`);
+      }
+
+      parts.push({ ETag: uploadPartResponse.ETag, PartNumber: partNumber });
+      partNumber++;
+    }
+
+    // Step 3: Complete Multipart Upload
+    await s3Client.send(
+      new CompleteMultipartUploadCommand({
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: uploadFilePath,
+        UploadId,
+        MultipartUpload: { Parts: parts },
+      })
+    );
+
     return { status: true, fileName };
   } catch (error: any) {
-    return { status: true, fileName };
+    // Step 4: Abort Multipart Upload in case of failure
+    if (UploadId && uploadFilePath) {
+      await s3Client.send(
+        new AbortMultipartUploadCommand({
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: uploadFilePath,
+          UploadId,
+        })
+      );
+    }
+
+    console.error("Error uploading file to S3:", error);
+    return { status: false, fileName };
   }
 }
+
+
+
+
+
 
 
 // upload extra file for marketing 
