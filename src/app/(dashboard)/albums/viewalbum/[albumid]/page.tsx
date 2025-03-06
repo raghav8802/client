@@ -45,7 +45,9 @@ enum AlbumProcessingStatus {
 }
 
 const albums = ({ params }: { params: { albumid: string } }) => {
+
   const albumIdParams = params.albumid;
+  
   const [albumId, setAlbumId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [albumDetails, setAlbumDetails] = useState<AlbumDetails | null>(null);

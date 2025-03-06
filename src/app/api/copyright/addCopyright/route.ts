@@ -36,6 +36,11 @@ export async function POST(request: NextRequest) {
       ]
     };
 
+
+    console.log("token : ");
+    console.log(`Bearer ${process.env.SWADIGI_API_KEY}`);
+    
+
     // Send request to the SourceAudio API
     const apiResponse = await axios.post('https://swadigi.sourceaudio.com/api/contentid/releaseClaim', data, {
       headers: {
@@ -44,6 +49,10 @@ export async function POST(request: NextRequest) {
       }
     });
 
+    console.log("api response : ");
+    console.log(apiResponse.data);
+    console.log(apiResponse.data[0].result);
+    
 
     if (apiResponse.data[0].success == 1) {      
       status  = true
@@ -86,3 +95,6 @@ export async function POST(request: NextRequest) {
 
   }
 }
+
+
+
