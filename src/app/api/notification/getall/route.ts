@@ -24,8 +24,6 @@ export async function GET(req: NextRequest) {
       notifications = await Notification.find();
     }
 
-    console.log("notifications : ");
-    console.log(notifications);
     
 
     return NextResponse.json({
