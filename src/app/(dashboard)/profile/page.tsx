@@ -121,10 +121,8 @@ const page = () => {
   }, [labelId]);
 
   return (
-    // <div className="flex" >
-    <div className="grid grid-cols-12 gap-4 ">
-     
-      <div className={`col-span-12 h-screen `}>
+    <div className="grid grid-cols-12 gap-4">
+      <div className={`col-span-12 h-screen relative`}>
         <div className={Style.profileContainer}>
           <div className="flex items-center justify-between">
             <h3 className={Style.labelHeader}>Label Information</h3>
@@ -381,6 +379,40 @@ const page = () => {
         </div>
 
         <BankModal isVisible={isModalVisible} onClose={handleClose} />
+
+        <footer className="absolute bottom-0 left-0 right-0 bg-gray-100 py-6 px-8 border-t">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-600">
+              <a 
+                href="/terms-of-service"
+                className="hover:text-gray-900 transition-colors"
+              >
+                Terms of Service
+              </a>
+              <a 
+                href="/distribution-agreement"
+                className="hover:text-gray-900 transition-colors"
+              >
+                Distribution Agreement
+              </a>
+              <a 
+                href="/privacy-policy"
+                className="hover:text-gray-900 transition-colors"
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="/return-and-refund-policy"
+                className="hover:text-gray-900 transition-colors"
+              >
+                Return & Refund Policy
+              </a>
+            </div>
+            <div className="text-center mt-4 text-sm text-gray-500">
+              © {new Date().getFullYear()} SwaLay Digital. All rights reserved.
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
