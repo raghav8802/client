@@ -9,15 +9,12 @@ export async function GET(request: NextRequest) {
 
         const labelId = request.nextUrl.searchParams.get("labelid");
 
-        console.log("labelId in get api");
-        console.log(labelId);
-        
 
         if (!labelId) {
             return NextResponse.json({ status: 400, message: "label ID is missing", success: false });
         }
 
-        const copyrightsData = await Youtube.find({ labelId: labelId });
+        const copyrightsData = await Youtube.find({ labelId: labelId }).sort({_id: -1});
         
         return NextResponse.json({
             message: "Artist found",

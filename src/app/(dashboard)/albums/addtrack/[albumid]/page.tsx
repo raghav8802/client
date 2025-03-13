@@ -251,6 +251,9 @@ export default function NewTrack({ params }: { params: { albumid: string } }) {
       setIsUploading(true);
       const response = await apiFormData("/api/track/addtrack", formData);
       
+      console.log("add track api response :");
+      console.log(response);
+      
 
       if (response.success) {
         toast.success("Song uploaded successfully!");

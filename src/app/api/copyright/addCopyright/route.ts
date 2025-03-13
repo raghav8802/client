@@ -15,8 +15,10 @@ export async function POST(request: NextRequest) {
     await connect();
 
     const body = await request.json();
+
     const { labelId,  link } = body;
 
+    let status = false
     // Extract the video ID from the YouTube URL
     const videoId = extractVideoId(link);
 
@@ -34,19 +36,33 @@ export async function POST(request: NextRequest) {
       ]
     };
 
+
+    console.log("token : ");
+    console.log(`Bearer ${process.env.SWADIGI_API_KEY}`);
+    
+
     // Send request to the SourceAudio API
     const apiResponse = await axios.post('https://swadigi.sourceaudio.com/api/contentid/releaseClaim', data, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 8945-02225d7a191f7b5bc0bf82de1c8e706d'
+        'Authorization': `Bearer ${process.env.SWADIGI_API_KEY}`
       }
     });
 
-    // Log the response from the SourceAudio API
-    console.log('SourceAudio API Response:', apiResponse.data);
+    console.log("api response : ");
+    console.log(apiResponse.data);
+    console.log(apiResponse.data[0].result);
+    
 
+    if (apiResponse.data[0].success == 1) {      
+      status  = true
+    }else{
+      status  = true
+    }
+    
+      
     // Save the full YouTube URL and other details to the database
-    const newYoutube = new Youtube({ labelId,  link });
+    const newYoutube = new Youtube({ labelId,  link, status });
     const result = await newYoutube.save();
 
     // Return a response indicating success
@@ -76,5 +92,9 @@ export async function POST(request: NextRequest) {
         status: 500
       });
     }
+
   }
 }
+
+
+

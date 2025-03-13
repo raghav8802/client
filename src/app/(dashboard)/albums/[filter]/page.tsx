@@ -8,34 +8,34 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import React, { useContext, useEffect, useState } from "react";
-
-// import Style from '../'
 import Style from "../../../styles/Albums.module.css";
-
-// import MusicPlayer from './components/MusicPlayer'
-// import NewReleaseItem from './components/NewReleaseItem'
-
 import { AlbumDataTable } from "../components/AlbumDataTable";
 import UserContext from "@/context/userContext";
 import toast from "react-hot-toast";
 import { apiGet } from "@/helpers/axiosRequest";
 import AlbumsLoading from "@/components/AlbumsLoading";
 import ErrorSection from "@/components/ErrorSection";
-// import DataTableUi from '../components/DataTable'
+import Link from "next/link";
 
 const albums = ({ params }: { params: { filter: string } }) => {
   // const filter = params.filter;
-  const filter = params.filter.charAt(0).toUpperCase() + params.filter.slice(1).toLowerCase();
+  const filter =
+    params.filter.charAt(0).toUpperCase() +
+    params.filter.slice(1).toLowerCase();
 
-
-  const validFilters = ["All", "Draft", "Processing", "Approved", "Rejected", "Live"];
+  const validFilters = [
+    "All",
+    "Draft",
+    "Processing",
+    "Approved",
+    "Rejected",
+    "Live",
+  ];
   if (!validFilters.includes(filter)) {
-    return (
-       <ErrorSection message="Invalid URL or Not Found" />
-    );
+    return <ErrorSection message="Invalid URL or Not Found" />;
   }
   // i want if filter is none of them then it show invalid url or url not NotFound
-  
+
   const context = useContext(UserContext);
   const labelId = context?.user?._id;
 
@@ -68,9 +68,6 @@ const albums = ({ params }: { params: { filter: string } }) => {
     return <AlbumsLoading />;
   }
 
-
-
-
   return (
     <div className="w-full h-dvh p-6 bg-white rounded-sm">
       <Breadcrumb>
@@ -94,8 +91,11 @@ const albums = ({ params }: { params: { filter: string } }) => {
       <div className={`bg-white mt-3 rounded ${Style.musicListContainer}`}>
         <div className={` ${Style.spaceBetween}`}>
           <h3 className="text-3xl font-bold mb-2 text-blue-500 capitalize ">
-            {filter} Albums 
+            {filter} Albums
           </h3>
+
+          <Link href="/albums/olddata/albums" className="px-4 py-2 btn-success">Old Data</Link>
+
         </div>
 
         <div className={Style.musicList}>
@@ -106,7 +106,6 @@ const albums = ({ params }: { params: { filter: string } }) => {
           )}
         </div>
       </div>
-
     </div>
   );
 };

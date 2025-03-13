@@ -39,18 +39,7 @@ interface ContentDeliveryReportProps {
   approvalDate: string;
 }
 
-// Helper function to add days and format date as day/month/year
-const addDays = (date: string, days: number) => {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
 
-  // Format date as dd/mm/yyyy
-  const day = String(result.getDate()).padStart(2, "0");
-  const month = String(result.getMonth() + 1).padStart(2, "0"); // Months are 0-based
-  const year = result.getFullYear();
-
-  return `${day}/${month}/${year}`;
-};
 
 export default function ContentDeliverySheet({
   contentTitle,
@@ -100,11 +89,10 @@ export default function ContentDeliverySheet({
                       Delivery Date
                     </h4>
                     <p className="text-sm">
-                    {new Date().toLocaleDateString('en-IN') !== new Date(addDays(approvalDate, 1)).toLocaleDateString('en-IN') 
-                      ? "Awaiting Delivery" 
-                      : new Date(addDays(approvalDate, 1)).toLocaleDateString('en-GB')}
-                  </p>
-
+                      {new Date() < new Date(new Date(approvalDate).setDate(new Date(approvalDate).getDate() + 1))
+                        ? "Awaiting Delivery"
+                        : new Date(new Date(approvalDate).setDate(new Date(approvalDate).getDate() + 1)).toLocaleString("en-GB")}
+                    </p>
 
                   </div>
                 </div>
