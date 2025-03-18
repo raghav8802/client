@@ -38,11 +38,8 @@ type TagOption = {
 
 const AlbumForm: React.FC = () => {
   const context = useContext(UserContext);
-  console.log("context");
-  console.log(context);
-
+  
   const labelId = context?.user?._id ?? "";
-  // const username = context?.user?.username || "";
 
   const year = new Date().getFullYear();
   const userLable = context?.user?.lable || "";
@@ -392,41 +389,76 @@ const AlbumForm: React.FC = () => {
                       required
                     >
                       <option value="">Select Song Language</option>
-                      <option value="Hindi">Hindi</option>
-                      <option value="Punjabi">Punjabi</option>
-                      <option value="English">English</option>
-                      <option value="Bengali">Bengali</option>
-                      <option value="Gujarati">Gujarati</option>
-                      <option value="Assamese">Assamese</option>
-                      <option value="Malayalam">Malayalam</option>
-                      <option value="Rajasthini">Rajasthini</option>
-                      <option value="Konkani">Konkani</option>
-                      <option value="Marathi">Marathi</option>
-                      <option value="Gadhwali">Gadhwali</option>
-                      <option value="Kannada">Kannada</option>
-                      <option value="Bhojpuri">Bhojpuri</option>
-                      <option value="Oriya">Oriya</option>
-                      <option value="Telugu">Telugu</option>
-                      <option value="Nagpuri">Nagpuri</option>
-                      <option value="Haryanvi">Haryanvi</option>
-                      <option value="Tamil">Tamil</option>
-                      <option value="Maithli">Maithli</option>
-                      <option value="Chhastisgarhi">Chhastisgarhi</option>
-                      <option value="Santhali">Santhali</option>
-                      <option value="Kasmiri">Kasmiri</option>
-                      <option value="Nepali">Nepali</option>
-                      <option value="Japanese">Japanese</option>
-                      <option value="Arabic">Arabic</option>
-                      <option value="African">African</option>
-                      <option value="Urdu">Urdu</option>
-                      <option value="Hadoti-Rajasthini">
-                        Hadoti-Rajasthini
-                      </option>
-                      <option value="Dogri">Dogri</option>
-                      <option value="Gharwali">Gharwali</option>
-                      <option value="Sanskrit">Sanskrit</option>
-                      <option value="Himchali">Himchali</option>
-                      <option value="Instrumental">Instrumental</option>
+                      
+
+                        <option label="Ahirani" value="Ahirani">Ahirani</option>
+                        <option label="Arabic" value="Arabic">Arabic</option>
+                        <option label="Assamese" value="Assamese">Assamese</option>
+                        <option label="Awadhi" value="Awadhi">Awadhi</option>
+                        <option label="Banjara" value="Banjara">Banjara</option>
+                        <option label="Bengali" value="Bengali">Bengali</option>
+                        <option label="Bhojpuri" value="Bhojpuri">Bhojpuri</option>
+                        <option label="Burmese" value="Burmese">Burmese</option>
+                        <option label="Chhattisgarhi" value="Chhattisgarhi">Chhattisgarhi</option>
+                        <option label="Chinese" value="Chinese">Chinese</option>
+                        <option label="Dogri" value="Dogri">Dogri</option>
+                        <option label="English" value="English">English</option>
+                        <option label="French" value="French">French</option>
+                        <option label="Garhwali" value="Garhwali">Garhwali</option>
+                        <option label="Garo" value="Garo">Garo</option>
+                        <option label="Gujarati" value="Gujarati">Gujarati</option>
+                        <option label="Haryanvi" value="Haryanvi">Haryanvi</option>
+                        <option label="Himachali" value="Himachali">Himachali</option>
+                        <option label="Hindi" value="Hindi">Hindi</option>
+                        <option label="Iban" value="Iban">Iban</option>
+                        <option label="Indonesian" value="Indonesian">Indonesian</option>
+                        <option label="Instrumental" value="Instrumental">Instrumental</option>
+                        <option label="Italian" value="Italian">Italian</option>
+                        <option label="Japanese" value="Japanese">Japanese</option>
+                        <option label="Javanese" value="Javanese">Javanese</option>
+                        <option label="Kannada" value="Kannada">Kannada</option>
+                        <option label="Kashmiri" value="Kashmiri">Kashmiri</option>
+                        <option label="Khasi" value="Khasi">Khasi</option>
+                        <option label="Kokborok" value="Kokborok">Kokborok</option>
+                        <option label="Konkani" value="Konkani">Konkani</option>
+                        <option label="Korean" value="Korean">Korean</option>
+                        <option label="Kumauni" value="Kumauni">Kumauni</option>
+                        <option label="Latin" value="Latin">Latin</option>
+                        <option label="Maithili" value="Maithili">Maithili</option>
+                        <option label="Malay" value="Malay">Malay</option>
+                        <option label="Malayalam" value="Malayalam">Malayalam</option>
+                        <option label="Mandarin" value="Mandarin">Mandarin</option>
+                        <option label="Manipuri" value="Manipuri">Manipuri</option>
+                        <option label="Marathi" value="Marathi">Marathi</option>
+                        <option label="Marwari" value="Marwari">Marwari</option>
+                        <option label="Naga" value="Naga">Naga</option>
+                        <option label="Nagpuri" value="Nagpuri">Nagpuri</option>
+                        <option label="Nepali" value="Nepali">Nepali</option>
+                        <option label="Odia" value="Odia">Odia</option>
+                        <option label="Pali" value="Pali">Pali</option>
+                        <option label="Persian" value="Persian">Persian</option>
+                        <option label="Punjabi" value="Punjabi">Punjabi</option>
+                        <option label="Rajasthani" value="Rajasthani">Rajasthani</option>
+                        <option label="Sainthili" value="Sainthili">Sainthili</option>
+                        <option label="Sambalpuri" value="Sambalpuri">Sambalpuri</option>
+                        <option label="Sanskrit" value="Sanskrit">Sanskrit</option>
+                        <option label="Santali" value="Santali">Santali</option>
+                        <option label="Sindhi" value="Sindhi">Sindhi</option>
+                        <option label="Sinhala" value="Sinhala">Sinhala</option>
+                        <option label="Spanish" value="Spanish">Spanish</option>
+                        <option label="Swahili" value="Swahili">Swahili</option>
+                        <option label="Tamil" value="Tamil">Tamil</option>
+                        <option label="Telugu" value="Telugu">Telugu</option>
+                        <option label="Thai" value="Thai">Thai</option>
+                        <option label="Tibetan" value="Tibetan">Tibetan</option>
+                        <option label="Tulu" value="Tulu">Tulu</option>
+                        <option label="Turkish" value="Turkish">Turkish</option>
+                        <option label="Ukrainian" value="Ukrainian">Ukrainian</option>
+                        <option label="Urdu" value="Urdu">Urdu</option>
+                        <option label="Zxx" value="Zxx">Zxx</option>
+
+
+
                     </select>
                     {errors.language && (
                       <p className="text-red-500 text-sm mt-1">

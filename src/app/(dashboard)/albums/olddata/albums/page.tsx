@@ -18,11 +18,19 @@ const page = () => {
 
   const lableName = context?.user?.lable;
 
+  console.log("lableName old data :: ");
+  console.log(lableName);
+  
+
   const [albumsData, setAlbumsData] = useState([]);
 
   const fetchData = async () => {
+    console.log("call");
+    
     try {
       const response = await apiGet(`/api/olddata/get?labelName=${lableName}`);
+      console.log("dsads");
+      console.log(response);
       
       setAlbumsData(response.data);
     } catch (error: any) {
@@ -60,3 +68,6 @@ const page = () => {
 };
 
 export default page;
+
+
+

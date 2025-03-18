@@ -125,9 +125,9 @@ const SignIn = () => {
                 </p>
               </div>
 
-              {/* <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  > */}
+              <p className={`mt-3 ${Styles.forgotPassword}`}  > 
+               Do not have an account?  <Link href="/register" className="font-bold">Register</Link></p> 
 
-              {/* Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p> */}
             </div>
           </div>
         </div>
