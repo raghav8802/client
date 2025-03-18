@@ -15,8 +15,7 @@ interface FetchArtistDetailsResponse {
 export const fetchArtistDetails = async ({ artistId }: FetchArtistDetailsParams): Promise<FetchArtistDetailsResponse> => {
     try {
         const response = await apiGet(`/api/artist/getArtistDetails?artistId=${artistId}`);
-        console.log("response arts");
-        console.log(response);
+   
         
         if (response.success) {
             return {
