@@ -30,8 +30,6 @@ const Navbar = () => {
 
   // Search functionality
   const handleSearch = async (query: string) => {
-
-    console.log("query : ", query);
     
 
     if (!query) {
@@ -50,8 +48,6 @@ const Navbar = () => {
     try {
       const response = await apiGet(`/api/search?query=${query}&labelid=${labelId}`);
 
-      console.log("response : ");
-      console.log(response);
 
       if (response.success) {
         setSearchResults(response.data); // Store search results
@@ -95,10 +91,10 @@ const Navbar = () => {
   }, []);
 
   const onLogout = async () => {
-    console.log("click logout");
+
     try {
       const res = await apiPost("/api/user/logout", {});
-      console.log(res);
+
       context?.setUser(undefined);
       router.refresh();
     } catch (error) {
