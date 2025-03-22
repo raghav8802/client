@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const isPublicPath = path === '/xg6jtv54ghv' || path === '/signin' || path === '/verifyemail' || path === '/forgotpassword' || path === '/agreement' || path === '/reset-password';
+    const isPublicPath = path === '/xg6jtv54ghv' || path === '/signin' || path === '/register' || path === '/verifyemail' || path === '/forgotpassword' || path === '/agreement' || path === '/reset-password' || path === '/message';
 
     const token = request.cookies.get('token')?.value || '';
  

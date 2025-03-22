@@ -19,3 +19,5 @@ const oldDataSchema = new mongoose.Schema({
 // const oldData = mongoose.model("oldalbumData", oldDataSchema);
 const oldData = mongoose.models.oldalbumData ||mongoose.model("oldalbumData", oldDataSchema);
 export default oldData;
+
+

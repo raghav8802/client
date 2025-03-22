@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { connect } from "@/dbConfig/dbConfig";
 import Label from "@/models/Label";
 import bcryptjs from 'bcryptjs';
-import { EmailTemplate } from "@/components/Email/Welcome";
+// import { EmailTemplate } from "@/components/Email/Welcome";
 import { Resend } from 'resend';
 
 //Resend

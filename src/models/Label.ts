@@ -89,7 +89,8 @@ const LabelSchema: Schema<iLabel> = new Schema({
   },
   state: {
     type: String,
-    required: [true, 'State is required'],
+    // required: [true, 'State is required'],
+    // required: false,
     trim: true,
   },
 });

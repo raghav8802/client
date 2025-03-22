@@ -27,10 +27,9 @@ const SignIn = () => {
   };
 
   const onSignIn = async () => {
-    console.log("on signin");
-    console.log(user);
+
     if (!validateEmail(user.email)) {
-      console.log("Invalid email format");
+
       toast.error("Enter a valid email");
       return;
     }
@@ -47,7 +46,7 @@ const SignIn = () => {
       const response = await apiPost("/api/user/signin", user);
       
       if (response.success) {
-        console.log(response.data.signature);
+
         toast.success("Success");
         setUser({ email: "", password: "" });
         if (response.data.signature) {
@@ -119,15 +118,15 @@ const SignIn = () => {
                 </button>
               </div>
 
-              <div>
+              {/* <div>
                 <p className={Styles.forgotPassword}>
                   <Link href="/forgotpassword">Forgot Password?</Link>
                 </p>
-              </div>
+              </div> */}
 
-              {/* <p className={`${Styles.inputLable} ${Styles.labelagreeterm}`}  > */}
+              {/* <p className={`mt-3 ${Styles.forgotPassword}`}  > 
+               Do not have an account?  <Link href="/register" className="font-bold">Register</Link></p>  */}
 
-              {/* Do not have an account?  <Link href="/register" className={Styles.termservice}>Register</Link></p> */}
             </div>
           </div>
         </div>
