@@ -41,7 +41,6 @@ const SignIn = () => {
     }
 
     try {
-      console.log("in try");
 
       const response = await apiPost("/api/user/signin", user);
       
