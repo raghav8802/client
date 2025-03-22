@@ -56,15 +56,17 @@ const register = () => {
 
     try {
       const response = await apiPost("/api/user/signup", userData);
+      console.log("api response");
+      console.log(response);
 
-      if (!response.success) {
-        toast.error(response.message);
-      } else {
-        toast.success(response.message);
-        setUser(initialState);
-        setIsSignUp(true);
-        router.push("/signin");
-      }
+        if (!response.success) {
+          toast.error(response.message);
+        } else {
+          toast.success(response.message);
+          setUser(initialState);
+          setIsSignUp(true);
+          router.push("/message");
+        }
     } catch (error) {
       console.log(error);
 
@@ -79,15 +81,6 @@ const register = () => {
     >
       <div className={` ${Styles.containerLeft}`}>
         <div className={Styles.containerLeftInner}>
-          <Image
-            src={
-              "https://swalay-music-files.s3.ap-south-1.amazonaws.com/assets/SwaLay+-2.png"
-            }
-            alt="logo"
-            width={100}
-            height={70}
-          />
-
           <h2 className={Styles.heading}>Register</h2>
           {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> */}
 

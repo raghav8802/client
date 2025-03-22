@@ -8,6 +8,7 @@ import { apiGet } from "@/helpers/axiosRequest";
 
 const HomeStatsCard = () => {
   const context = useContext(UserContext);
+  
 
   const labelId = context?.user?._id;
   const [stats, setStats] = useState<{
@@ -22,14 +23,11 @@ const HomeStatsCard = () => {
 
   // let userName = context?.user?.username || "Guest";
   let userName = "";
-  if (context?.user) {
-    userName = context?.user?.username;
-  }else{
-    userName = "Guest";
+  if (context?.user?.usertype === "super") {
+    userName = context?.user?.lable || context?.user?.username;
+  } else if (context?.user?.usertype === "normal") {
+    userName = context?.user?.username || "Guest";
   }
-
-  // } else if (context?.user?.usertype === "normal") {
-  //   userName = context?.user?.username || "Guest";
 
   const fetchNumberCounts = async () => {
     try {

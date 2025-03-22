@@ -74,8 +74,7 @@ export async function POST(request: NextRequest) {
             contact, 
             state,
             razor_contact: razorpayContactId, // Ensure this matches the schema
-            password: hashedPassword,
-            lable: "SwaLay Digital"
+            password: hashedPassword
         });
            
          await newUser.save();
