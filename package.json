@@ -7,6 +7,8 @@
     "start": "npm run dev",
     "lint": "next lint"
   },
+
+  //hret
   "dependencies": {
     "-": "^0.0.1",
     "@aws-sdk/client-s3": "^3.623.0",
