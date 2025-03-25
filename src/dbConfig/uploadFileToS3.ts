@@ -123,7 +123,7 @@ export async function uploadFileToS3({
 
 
     // Step 2: Upload Parts
-    const partSize = .5 * 1024 * 1024; // 5 MB per part (adjust as needed)
+    const partSize = 1 * 1024 * 1024; // 5 MB per part (adjust as needed)
     const parts = [];
     let partNumber = 1;
 
