@@ -81,6 +81,7 @@ export async function uploadFileToS3({
 
 
   try {
+    console.log("new");
     const fileBuffer = file;
     uploadFilePath = `albums/07c1a${folderName}ba3/cover/${fileName}`;
 
@@ -122,7 +123,7 @@ export async function uploadFileToS3({
 
 
     // Step 2: Upload Parts
-    const partSize = 2 * 1024 * 1024; // 5 MB per part (adjust as needed)
+    const partSize = 5 * 1024 * 1024; // 5 MB per part (adjust as needed)
     const parts = [];
     let partNumber = 1;
 
