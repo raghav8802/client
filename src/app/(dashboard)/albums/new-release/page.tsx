@@ -101,7 +101,12 @@ const AlbumForm: React.FC = () => {
 
   // Handling file drop for artwork
   const onDrop = (acceptedFiles: File[]) => {
-    setFormData({ ...formData, artwork: acceptedFiles[0] });
+    const file = acceptedFiles[0];
+    if (file && file.size > 10 * 1024 * 1024) { // Check if file size exceeds 10 MB
+      toast.error("File size is too large. Maximum allowed size is 10 MB.");
+      return;
+    }
+    setFormData({ ...formData, artwork: file });
   };
 
   // useDropzone hook for handling file uploads
