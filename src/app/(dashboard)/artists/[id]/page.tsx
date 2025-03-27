@@ -204,7 +204,7 @@ const ArtistPage = ({ params }: { params: { id: string } }) => {
 
                 {artist && artist.instagram !== "" && (
                   <Link
-                    href={`https://www.instagram.com/${artist.artistName}`}
+                    href={`https://www.instagram.com/${artist.instagram}`}
                     target="_blank"
                     className="border-black "
                   >
