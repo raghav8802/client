@@ -8,7 +8,7 @@ import { apiPost } from "@/helpers/axiosRequest";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-const register = () => {
+function Register() {
   const router = useRouter();
   const initialState = {
     email: "",
@@ -23,7 +23,6 @@ const register = () => {
   const [user, setUser] = useState(initialState);
   const [isDisable, setIsDisable] = useState(true);
   const [isAgreementChecked, setIsAgreementChecked] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
     if (
@@ -48,11 +47,11 @@ const register = () => {
 
   const onSignUp = async () => {
     if (user.password !== user.confirmPassword) {
-      toast.error("Password are not matched");
+      toast.error("Passwords do not match");
       return;
     }
 
-    const { confirmPassword, ...userData } = user;
+    const { ...userData } = user;
 
     try {
       const response = await apiPost("/api/user/signup", userData);
@@ -64,7 +63,6 @@ const register = () => {
         } else {
           toast.success(response.message);
           setUser(initialState);
-          setIsSignUp(true);
           router.push("/message");
         }
     } catch (error) {
@@ -327,6 +325,6 @@ const register = () => {
       </div>
     </div>
   );
-};
+}
 
-export default register;
+export default Register;

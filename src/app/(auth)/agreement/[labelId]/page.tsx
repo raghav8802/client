@@ -17,10 +17,8 @@ interface User {
 
 function Agreement({ params }: { params: { labelId: string } }) {
   const [labelId, setLabelId] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [signatureFile, setSignatureFile] = useState<File | null>(null); // For file handling
-  const [uploadDate, setUploadDate] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -32,7 +30,7 @@ function Agreement({ params }: { params: { labelId: string } }) {
       setLabelId(decodedLabelId);
     } catch (e) {
       console.error("Decoding error:", e);
-      setError("Invalid label ID format.");
+      Error("Invalid label ID format.");
     }
   }, [params.labelId]);
 
@@ -65,7 +63,6 @@ function Agreement({ params }: { params: { labelId: string } }) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       setSignatureFile(acceptedFiles[0]);
-      setUploadDate(new Date().toISOString());
     }
   }, []);
 
@@ -82,7 +79,6 @@ function Agreement({ params }: { params: { labelId: string } }) {
   // 4. Clear uploaded file
   const clearSignature = () => {
     setSignatureFile(null);
-    setUploadDate(null);
   };
 
   // 5. Handle form submission
